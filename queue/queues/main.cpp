@@ -5,6 +5,9 @@
 int main()
 {
     Queue<int> q;
-    std :: cout << q.isEmpty();
+    q.push(5);
+    q.push(12);
+    q.push(13);
+    std :: cout << q.pop();
     return 0;
 }

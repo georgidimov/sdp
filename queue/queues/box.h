@@ -8,8 +8,11 @@ class Box
     Box * prev;
 
     T value;
+public:
+    Box();
+    Box(Box * passedPrev, T passedValue, Box * passedNext);
+    ~Box();
 
-protected:
     Box * getNext() const;
     bool setNext(Box * passedNext);
 
@@ -19,10 +22,6 @@ protected:
     T getValue() const;
     void setValue(T passedValue);
 
-public:
-    Box();
-    Box(Box * next, Box * prev, T Value);
-    ~Box();
 };
 
 template <class T>
@@ -32,7 +31,7 @@ Box<T> :: Box(){
 }
 
 template <class T>
-Box<T> :: Box(Box * passedNext, Box * passedPrev, T passedValue){
+Box<T> :: Box(Box * passedPrev, T passedValue, Box * passedNext){
     next = passedNext;
     prev = passedPrev;
     value = passedValue;
@@ -40,8 +39,8 @@ Box<T> :: Box(Box * passedNext, Box * passedPrev, T passedValue){
 
 template <class T>
 Box<T> :: ~Box(){
-    next = NULL;
-    prev = NULL;
+    delete prev;
+    std :: cout << "Box()";
 }
 
 template <class T>
@@ -56,12 +55,12 @@ bool Box<T> :: setNext(Box<T> * passedNext){
 }
 
 template <class T>
-Box<T> * Box<T> ::getPrev() const{
+Box<T> * Box<T> :: getPrev() const{
     return prev;
 }
 
 template <class T>
-bool Box<T> ::setPrev(Box<T> * passedPrev){
+bool Box<T> :: setPrev(Box<T> * passedPrev){
     prev = passedPrev;
     return prev == NULL;
 }

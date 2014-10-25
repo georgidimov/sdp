@@ -4,18 +4,14 @@
 template <class T>
 class Box{
     Box * next;
-    Box * prev;
     T value;
 public:
     Box();
-    Box(Box * newNext, Box * newPrev, T newValue);
+    Box(Box * newNext, T newValue);
     ~Box();
 
     Box * getNext() const;
     void setNext(Box * newNext);
-
-    Box * getPrev() const;
-    void setPrev(Box * newPrev);
 
     T getValue() const;
     void setValue(T newValue);
@@ -26,13 +22,11 @@ public:
 template <class T>
 Box <T> :: Box(){
     next = NULL;
-    prev = NULL;
 }
 
 template <class T>
-Box <T> :: Box(Box * newNext, Box * newPrev, T newValue){
+Box <T> :: Box(Box * newNext, T newValue){
     next = newNext;
-    prev = newPrev;
     value = newValue;
 }
 //constructors end
@@ -40,8 +34,8 @@ Box <T> :: Box(Box * newNext, Box * newPrev, T newValue){
 //destructor
 template <class T>
 Box <T> :: ~Box(){
-    next = NULL;
-    prev = NULL;
+    delete next;
+    std :: cout << "~Box()";
 }
 
 //destructor end
@@ -58,20 +52,6 @@ void  Box <T> :: setNext(Box * newNext){
 }
 
 //next end
-
-
-//prev setter and getter
-template <class T>
-Box <T> * Box <T> :: getPrev() const{
-    return prev;
-}
-
-template <class T>
-void  Box <T> :: setPrev(Box * newPrev){
-    prev = newPrev;
-}
-
-//prev end
 
 
 //value setter and getter

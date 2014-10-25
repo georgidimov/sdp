@@ -14,8 +14,8 @@ public:
 
     bool isEmpty() const;
     size_t size() const;
-    bool push(Box<T> * newBox);
-    Box<T> * pop();
+    bool push(T newBoxValue);
+    T pop();
 
 };
 
@@ -23,14 +23,14 @@ public:
 template <class T>
 Queue<T> :: Queue(){
     boxesCount = 0;
-    first = NULL;
-    last = NULL;
+    first = new Box<T>;
+    last = first;
 }
 
 template <class T>
 Queue<T> :: ~Queue(){
     boxesCount = 0;
-    first = NULL;
+    delete first;
     last = NULL;
 }
 
@@ -38,4 +38,33 @@ Queue<T> :: ~Queue(){
 template <class T>
 bool Queue<T> :: isEmpty() const{
     return !(bool)boxesCount;
+}
+
+template <class T>
+size_t Queue<T> :: size() const{
+    return boxesCount;
+}
+
+template <class T>
+bool Queue<T> :: push(T newBoxValue){
+/*    Box<T> * newBox = new Box<T>(NULL, newBoxValue, first);
+    first->setPrev(newBox);
+    first = newBox;
+/*    tempPointer->setPrev(NULL);
+    tempPointer->setNext(first);
+    first->setPrev(tempPointer);
+    first = tempPointer;
+*/
+    boxesCount++;
+
+    return first == NULL;
+}
+
+template <class T>
+T Queue<T> :: pop(){
+    T tempValue = last->getValue();
+    last = last->getPrev();
+    delete last->getNext();
+    last->setNext(NULL);
+    return tempValue;
 }
