@@ -77,7 +77,7 @@ int main()
         operatorsFile >> op[i].type;
         operatorsFile >> op[i].priority;
         operatorsFile >> op[i].associativity;
-/*
+
         std :: cout << op[i].symbol << ' '
                     << op[i].type << ' '
                     << op[i].priority << ' '
@@ -88,8 +88,7 @@ int main()
     */
     Stack<int> numbers;
     Stack<char> operations;
-    //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
-    char input[] = "12 -5";
+    char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
     size_t length = strlen(input);
 
     int temp;
@@ -104,32 +103,22 @@ int main()
             temp = getNumber(&input[i]);
             numbers.push(temp);
             i += getDigitsCount(temp);
-
-
-        }else{
+        }else if( op.isOperator(input[i]) || input[i] == '(' || input[i] == ')' ){
+            operations.push(input[i]);
+        }else if( input[i] != ' ' ){
             ///exception
         }
-
-        /*if( input[i] == '+' || input[i] == '-' || input[i] == '*' ||
-            input[i] == '/' || input[i] == '(' || input[i] == ')'){
-
-            if(input[i] == '-' && !isDigit(input[i + 1])){
-                operations.push(input[i]);
-            }else{
-                tempValue = -1;
-            }
-        }else if( (isDigit(input[i]))){
-            tempValue *= getNumber(&input[i]);
-            i += getDigitsCount(tempValue);
-            numbers.push(tempValue);
-            tempValue = 1;
-        }*/
     }
 
     while (!numbers.isEmpty()) {
         std :: cout << numbers.pop() << std :: endl;
     }
 
+    std :: cout << "operations now" << std :: endl;
+
+    while( !operations.isEmpty() ){
+        std :: cout << operations.pop() << std :: endl;
+    }
     return 0;
 }
 //    QCoreApplication a(argc, argv);
