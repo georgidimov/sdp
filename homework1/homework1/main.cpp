@@ -81,17 +81,10 @@ int main(){
     Stack<int> numbers;
     Stack<char> operations;
     //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
-    //char input[] = "5 b 2 a 3";
-    char input[] = "5 b 2";
-    size_t length = strlen(input);
-    numbers.push(2);
-    numbers.push(3);
-    numbers.push(4);
+    char input[] = "5 a 2 b 3 c 7";
 
-    while( !numbers.isEmpty() ){
-        numbers.pop();
-    }
-/*
+    size_t length = strlen(input);
+
     int temp;
 
     for(size_t i = 0; i < length; ++i){
@@ -107,8 +100,22 @@ int main(){
                 operatorConf topOp = op.getOperator( operations.pop() );
 
                 if( currentOp.priority < topOp.priority ){
-                    operations.push(topOp.symbol);
-                    operations.push(currentOp.symbol);
+                    ///operations.push(topOp.symbol);
+                    ///operations.push(currentOp.symbol);
+
+                    while(currentOp.priority < topOp.priority ){
+                        int right = numbers.pop();
+                        int left = numbers.pop();
+
+                        numbers.push( calculateOperator<int>(topOp.type, left, right) );
+                        if ( operations.isEmpty() ){
+                            break;
+                        }
+
+                        topOp = op.getOperator( operations.pop() );
+                    }
+
+                    operations.push( currentOp.symbol );
                 }else if( currentOp.priority == topOp.priority ){
                     if( currentOp.associativity != topOp.associativity ){
                         ///exception
@@ -120,12 +127,14 @@ int main(){
                             ///type
                             int right = numbers.pop();
                             int left = numbers.pop();
-                            numbers.push( calculateOperator(currentOp.symbol, left, right) );
+                            numbers.push( calculateOperator<int>(topOp.type, left, right) );
+                            operations.push( currentOp.symbol );
                             //.pop.pop OP pop
                         }
                     }
                 }else{
-
+                    operations.push(topOp.symbol);
+                    operations.push(currentOp.symbol);
                 }
             }
         }else if( input[i] != ' ' ){
@@ -133,17 +142,17 @@ int main(){
         }
     }
 
-    //while( !operations.isEmpty() || !numbers.isEmpty() ){
-    //    std :: cout << numbers.pop() << std :: endl;
-                    //<< numbers.pop() << " end";
-        //int right = numbers.pop();
-        //int left = numbers.pop();
-        //char op = operations.pop();
-        //numbers.push( calculateOperator(op, left, right) );
-    //}
+    while( !operations.isEmpty() ){
+        int right = numbers.pop();
+        int left = numbers.pop();
+        operatorConf opr = op.getOperator( operations.pop() );
+        numbers.push( calculateOperator<int>(opr.type, left, right) );
+    }
+
+    std :: cout << "result " << numbers.pop();
 
 
-  /*  while (!numbers.isEmpty()) {
+  /* while (!numbers.isEmpty()) {
         std :: cout << "! "<< numbers.pop() << std :: endl;
     }
 
@@ -154,14 +163,9 @@ int main(){
     }
 */
 ///
-/*
 
-    int right = numbers.pop();
-    int left = numbers.pop();
-    operatorConf oprl = op.getOperator( operations.pop() );
-    calculateOperator<int>(oprl.type, left, right);
-    numbers.push( calculateOperator<int>(oprl.type, left, right) );
-*/
+
+
     return 0;
 }
 //    QCoreApplication a(argc, argv);
