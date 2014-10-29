@@ -6,13 +6,13 @@ template <class T>
 class Stack
 {    
     Box <T> * top;
-    size_t boxesCount;
+    int boxesCount;
 public:
     Stack();
     ~Stack();
 
-    void push(T newBox);
-    T pop();
+    void push(const T newBox);
+    const T pop();
 
     bool isEmpty() const;
 };
@@ -29,11 +29,12 @@ Stack <T> :: Stack(){
 template <class T>
 Stack <T> :: ~Stack(){
     delete top;
+    top = NULL;
 }
 
 //push
 template <class T>
-void Stack <T> :: push(T value){
+void Stack <T> :: push(const T value){
     if(boxesCount == 0){    //check if there is at least one box
         top = new Box <T> (NULL, value);
     }else{
@@ -47,7 +48,7 @@ void Stack <T> :: push(T value){
 
 //pop
 template <class T>
-T Stack <T> :: pop(){
+const T Stack <T> :: pop(){
     T tempValue = top->getValue();
     Box <T> * tempBoxPointer = top->getNext();
 
@@ -56,7 +57,6 @@ T Stack <T> :: pop(){
 
     top = tempBoxPointer;
     tempBoxPointer = NULL;
-
     --boxesCount;
 
     return tempValue;
@@ -65,8 +65,5 @@ T Stack <T> :: pop(){
 
 template <class T>
 bool Stack <T> :: isEmpty() const{
-    if(boxesCount == 1){
-        std :: cout << std :: endl << top->getNext() << std :: endl;
-    }
     return !boxesCount;
 }

@@ -35,7 +35,6 @@ Box <T> :: Box(Box * newNext, T newValue){
 template <class T>
 Box <T> :: ~Box(){
     delete next;
-    std :: cout << "~Box()";
 }
 
 //destructor end
