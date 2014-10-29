@@ -1,6 +1,6 @@
 #include "operators.h"
 
-operators :: operators(char * filePath)
+operators :: operators(const char *filePath)
 {
     operatorsCount = 0;
 

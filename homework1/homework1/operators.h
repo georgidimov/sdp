@@ -11,7 +11,7 @@ class operators
     void readOperators();
     void clear();
 public:
-    operators(char * filePath);
+    operators(const char * filePath);
     ~operators();
 
 

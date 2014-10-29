@@ -6,6 +6,29 @@
 #include <stack.h>
 #include <operators.h>
 
+template <typename T>
+T calculateOperator(char op, T leftArg, T rightArg){
+    T result;
+    switch (op){
+    case '+':
+        result = leftArg + rightArg;
+        break;
+    case '-':
+        result = leftArg - rightArg;
+        break;
+    case '*':
+        result = leftArg * rightArg;
+        break;
+    case '/':
+        result = leftArg / rightArg;
+    default:
+        ///exception
+        break;
+    }
+
+    return result;
+}
+
 bool isDigit(char symbol){
     return symbol >= '0' && symbol <= '9';
 }
@@ -51,67 +74,77 @@ size_t getDigitsCount(int number){
 
 
 
-int main()
-{
+int main(){
 
-    char filePath[] = "../homework1/files/operators";
+    char filePath[] = "../homework1/files/ops";
     operators op(filePath);
-    /*
-    std :: ifstream operatorsFile("../homework1/files/operators", std :: ios :: in);
-    std :: string buffer;
-    size_t linesCount = 0;
-
-    while (operatorsFile.good()) {
-        std :: getline(operatorsFile, buffer);
-        ++linesCount;
-    }
-
-    operatorsFile.clear();
-    operatorsFile.seekg(operatorsFile.beg);
-    linesCount--;
-
-    operators op[linesCount];
-
-    for(size_t i = 0; i < linesCount; i++){
-        operatorsFile >> op[i].symbol;
-        operatorsFile >> op[i].type;
-        operatorsFile >> op[i].priority;
-        operatorsFile >> op[i].associativity;
-
-        std :: cout << op[i].symbol << ' '
-                    << op[i].type << ' '
-                    << op[i].priority << ' '
-                    << op[i].associativity << ' '  << std :: endl;*/
-/*    }
-
-    operatorsFile.close();
-    */
     Stack<int> numbers;
     Stack<char> operations;
-    char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
+    //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
+    //char input[] = "5 b 2 a 3";
+    char input[] = "5 b 2";
     size_t length = strlen(input);
+    numbers.push(2);
+    numbers.push(3);
+    numbers.push(4);
 
+    while( !numbers.isEmpty() ){
+        numbers.pop();
+    }
+/*
     int temp;
 
     for(size_t i = 0; i < length; ++i){
-        if( input[i] == '-' && isDigit(input[i + 1]) ){
+        if( ( input[i] == '-' && isDigit(input[i + 1]) ) || isDigit(input[i]) ){
             temp = getNumber(&input[i]);
             numbers.push(temp);
-
-            i += getDigitsCount(temp);
-        }else if( isDigit(input[i]) ){
-            temp = getNumber(&input[i]);
-            numbers.push(temp);
-            i += getDigitsCount(temp);
         }else if( op.isOperator(input[i]) || input[i] == '(' || input[i] == ')' ){
-            operations.push(input[i]);
+            /// )
+            if( operations.isEmpty() ){
+                operations.push(input[i]);
+            }else{
+                operatorConf currentOp = op.getOperator(input[i]);
+                operatorConf topOp = op.getOperator( operations.pop() );
+
+                if( currentOp.priority < topOp.priority ){
+                    operations.push(topOp.symbol);
+                    operations.push(currentOp.symbol);
+                }else if( currentOp.priority == topOp.priority ){
+                    if( currentOp.associativity != topOp.associativity ){
+                        ///exception
+                    }else{
+                        if(currentOp.associativity == 1){    //rigth associativity
+                            operations.push(topOp.symbol);
+                            operations.push(currentOp.symbol);
+                        }else{
+                            ///type
+                            int right = numbers.pop();
+                            int left = numbers.pop();
+                            numbers.push( calculateOperator(currentOp.symbol, left, right) );
+                            //.pop.pop OP pop
+                        }
+                    }
+                }else{
+
+                }
+            }
         }else if( input[i] != ' ' ){
             ///exception
         }
     }
 
-    while (!numbers.isEmpty()) {
-        std :: cout << numbers.pop() << std :: endl;
+    //while( !operations.isEmpty() || !numbers.isEmpty() ){
+    //    std :: cout << numbers.pop() << std :: endl;
+                    //<< numbers.pop() << " end";
+        //int right = numbers.pop();
+        //int left = numbers.pop();
+        //char op = operations.pop();
+        //numbers.push( calculateOperator(op, left, right) );
+    //}
+
+
+  /*  while (!numbers.isEmpty()) {
+        std :: cout << "! "<< numbers.pop() << std :: endl;
     }
 
     std :: cout << "operations now" << std :: endl;
@@ -119,6 +152,16 @@ int main()
     while( !operations.isEmpty() ){
         std :: cout << operations.pop() << std :: endl;
     }
+*/
+///
+/*
+
+    int right = numbers.pop();
+    int left = numbers.pop();
+    operatorConf oprl = op.getOperator( operations.pop() );
+    calculateOperator<int>(oprl.type, left, right);
+    numbers.push( calculateOperator<int>(oprl.type, left, right) );
+*/
     return 0;
 }
 //    QCoreApplication a(argc, argv);

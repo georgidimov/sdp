@@ -65,5 +65,5 @@ const T Stack <T> :: pop(){
 
 template <class T>
 bool Stack <T> :: isEmpty() const{
-    return !boxesCount;
+    return boxesCount == 0;
 }
