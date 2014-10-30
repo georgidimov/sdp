@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string.h>
 #include <operators.h>
 #include <stack.h>
 
@@ -14,6 +15,7 @@ class Parser{
     T getNumber(const char * start) const;
     size_t getDigitsCount(T number) const;
 
+    void changeBrackets(char * & expression);
     bool correctBrackets(const char * expression) const;
 public:
     Parser(const Operators & operationSetNew);
@@ -102,12 +104,22 @@ size_t Parser<T> :: getDigitsCount(T number) const{
 }
 
 template <class T>
-T Parser<T> :: calculateExpression(const char * expression){
+T Parser<T> :: calculateExpression(const char * PassedExpression){
+    size_t length = strlen(PassedExpression);
+
+    char * expression = new char[length + 1];
+    strcpy(expression, PassedExpression);
+
+    expression[length] = '\0';
+
+    changeBrackets(expression);  //change different brackets to ( )
+
     if ( !correctBrackets(expression) ){
+        delete [] expression;
         throw std :: runtime_error("incorrect brackets");
     }
 
-    size_t length = strlen(expression);
+
 
     T temp;
 
@@ -120,6 +132,7 @@ T Parser<T> :: calculateExpression(const char * expression){
         }else if( operationsSet.isOperator(expression[i]) || expression[i] == '(' || expression[i] == ')' ){ //check if symbol is operator
             if( operations.isEmpty() ){  //if stack with operation is empty push any operation
                 if(expression[i] == ')'){     //except ")"
+                    delete [] expression;
                     throw std :: runtime_error("start with closing bracket");
                 }
 
@@ -139,6 +152,7 @@ T Parser<T> :: calculateExpression(const char * expression){
                             right = numbers.pop();
                             left = numbers.pop();
                         }catch( std :: runtime_error & exc ){
+                            delete [] expression;
                             throw std :: runtime_error("no numbers in stack");
                         }
 
@@ -146,6 +160,7 @@ T Parser<T> :: calculateExpression(const char * expression){
                         try{
                             tempOperator = operations.pop();
                         }catch( std :: runtime_error & exc){
+                            delete [] expression;
                             throw std :: runtime_error("incorrect brackets");
                         }
 
@@ -191,6 +206,7 @@ T Parser<T> :: calculateExpression(const char * expression){
                         //then check for associativity => if is different
                         //something is not ok, else continue with expression
                         if( currentOp.associativity != topOp.associativity ){
+                            delete [] expression;
                             throw std :: runtime_error("wrong operators associativity");
                         }else{
                             if( currentOp.associativity == 1 ){    //rigth associativity
@@ -212,6 +228,7 @@ T Parser<T> :: calculateExpression(const char * expression){
                 }
             }
         }else if( expression[i] != ' ' ){  //check for incorrect symbols
+            delete [] expression;
             throw std :: runtime_error("incorrect symbol in expression");
         }
     }
@@ -229,12 +246,12 @@ T Parser<T> :: calculateExpression(const char * expression){
 
     T result = numbers.pop();
 
-    if( !numbers.isEmpty() ){
-        throw std :: runtime_error("incorrect expression - more numbers than operations");
-    }else if( !operations.isEmpty()){
+    if( !operations.isEmpty()){
+        delete [] expression;
         throw std :: runtime_error("incorrect expression - more operations then numbers");
     }
 
+    delete [] expression;
     return result;
 }
 
@@ -255,4 +272,19 @@ bool Parser<T> :: correctBrackets(const char * expression) const{
     }
 
     return brackets.isEmpty() == true;
+}
+
+template <class T>
+void Parser<T> :: changeBrackets(char * & expression){
+    size_t length = strlen(expression);
+
+    for(size_t i = 0; i < length; ++i){
+        if(expression[i] == '{' || expression[i] == '['){
+            expression[i] = '(';
+        }
+
+        if(expression[i] == '}' || expression[i] == ']'){
+            expression[i] = ')';
+        }
+    }
 }
