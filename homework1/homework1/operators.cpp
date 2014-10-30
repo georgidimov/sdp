@@ -69,7 +69,7 @@ size_t Operators :: getCount() const{
 
 const OperatorConf Operators::getOperator(char op) const{
     if( !isOperator(op) ){
-        ///exception
+        throw std :: runtime_error("operator not found");
     }
 
     //check all operators for coincidence
