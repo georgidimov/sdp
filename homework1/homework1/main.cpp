@@ -84,7 +84,7 @@ int main(){
     Stack<char> operations;
     //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
     //char input[] = "5 a 2 b 3 c 7";
-    char input[] = "2 * (3 - 7 ) + (1 + 2 )";
+    char input[] = "2 * ( 12 - 3 ) + 1 * ( 3 * ( 5 - 2 * ( 1 - 1 ) ) )";
     size_t length = strlen(input);
 
     double temp;
@@ -141,9 +141,18 @@ int main(){
                             }
 
                             topOp = op.getOperator( operations.pop() );
+
+                            if(topOp.type == '('){
+                                break;
+                            }
+                        }
+                        ///
+                        if( !operations.isEmpty() ){
+                            operations.push( topOp.symbol );
                         }
 
                         operations.push( currentOp.symbol );
+
                     }else if( currentOp.priority == topOp.priority ){
                         if( currentOp.associativity != topOp.associativity ){
                             ///exception
@@ -180,7 +189,7 @@ int main(){
         numbers.push(calculateOperator<double>(opr.type, left, right) );
     }
 
-    std :: cout << "result " << numbers.pop();
+    std :: cout << "result " << numbers.pop() << std :: endl ;
   /* while (!numbers.isEmpty()) {
         std :: cout << "! "<< numbers.pop() << std :: endl;
     }
