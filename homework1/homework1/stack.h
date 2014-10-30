@@ -1,18 +1,23 @@
 #pragma once
 #include <iostream>
+#include <stdexcept>
 #include <box.h>
 
 template <class T>
 class Stack
-{    
+{
+//prevent using copy constructor and operator =
+    Stack(const Stack &);
+    Stack & operator= (const Stack &);
+
     Box <T> * top;
     int boxesCount;
 public:
     Stack();
     ~Stack();
 
-    void push(const T newBox);
-    const T pop();
+    void push(const T & newBox);
+    T pop();
 
     bool isEmpty() const;
 };
@@ -32,9 +37,8 @@ Stack <T> :: ~Stack(){
     top = NULL;
 }
 
-//push
 template <class T>
-void Stack <T> :: push(const T value){
+void Stack <T> :: push(const T & value){
     if(boxesCount == 0){    //check if there is at least one box
         top = new Box <T> (NULL, value);
     }else{
@@ -46,14 +50,18 @@ void Stack <T> :: push(const T value){
 }
 //push end
 
-//pop
+
 template <class T>
-const T Stack <T> :: pop(){
+T Stack <T> :: pop(){
+    if( isEmpty() ){
+        throw std :: runtime_error("empty stack");
+    }
+
     T tempValue = top->getValue();
     Box <T> * tempBoxPointer = top->getNext();
 
     top->setNext(NULL);    //detach box from the chain
-    delete top;
+    delete top;            //and delete the it
 
     top = tempBoxPointer;
     tempBoxPointer = NULL;
@@ -63,7 +71,9 @@ const T Stack <T> :: pop(){
 }
 //pop end
 
+
 template <class T>
 bool Stack <T> :: isEmpty() const{
     return boxesCount == 0;
 }
+//isEmpty end

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-struct operatorConf{
+struct OperatorConf{
     char symbol;
     char type;
     size_t priority;

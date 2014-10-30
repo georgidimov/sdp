@@ -3,19 +3,23 @@
 #include <fstream>
 #include <operatorConf.h>
 
-class operators
+class Operators
 {
-    operatorConf * operatorsSet;
+//prevent using copy constructor and operator=
+    Operators(const Operators&);
+    Operators & operator= (const Operators &);
+
+    OperatorConf * operatorsSet;
     size_t operatorsCount;
 
     void readOperators();
     void clear();
 public:
-    operators(const char * filePath);
-    ~operators();
+    Operators(const char * filePath);
+    ~Operators();
 
 
     size_t getCount() const;
-    operatorConf getOperator(char op) const;
+    const OperatorConf getOperator(char op) const;
     bool isOperator(char op) const;
 };

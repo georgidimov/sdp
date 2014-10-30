@@ -3,6 +3,10 @@
 
 template <class T>
 class Box{
+//prevent using copy constructor and operator=
+    Box(const Box &);
+    Box & operator=(const Box &);
+
     Box * next;
     T value;
 public:
@@ -56,6 +60,7 @@ void  Box <T> :: setNext(Box * newNext){
 //value setter and getter
 template <class T>
 T Box <T> :: getValue() const{
+
     return value;
 }
 

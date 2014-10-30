@@ -16,12 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    box.cpp \
-    stack.cpp \
     operators.cpp
 
 HEADERS += \
     box.h \
     stack.h \
     operators.h \
-    operatorConf.h
+    operatorConf.h \
+    parser.h

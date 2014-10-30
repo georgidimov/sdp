@@ -1,6 +1,6 @@
 #include "operators.h"
 
-operators :: operators(const char *filePath)
+Operators :: Operators(const char *filePath)
 {
     operatorsCount = 0;
 
@@ -15,42 +15,59 @@ operators :: operators(const char *filePath)
 
     operatorsFile.clear();
     operatorsFile.seekg(operatorsFile.beg);
-    operatorsCount--;
+    operatorsCount++;
 
-    operatorsSet = new operatorConf[operatorsCount];
+    operatorsSet = new OperatorConf [operatorsCount];
 
-    //read all operators
-    for(size_t i = 0; i < operatorsCount; i++){
+    size_t maxPriority = 0;
+    //read operators and define max priority
+    for(size_t i = 0; i < operatorsCount - 2; i++){
         operatorsFile >> operatorsSet[i].symbol;
         operatorsFile >> operatorsSet[i].type;
         operatorsFile >> operatorsSet[i].priority;
         operatorsFile >> operatorsSet[i].associativity;
 
+        maxPriority = std :: max( maxPriority, operatorsSet[i].priority );
+    }
 
-/*        std :: cout << operatorsSet[i].symbol << ' '
+
+    //add brackets as operators with highest priority
+    ++maxPriority;
+
+    operatorsSet[ operatorsCount - 2 ].symbol = '(';
+    operatorsSet[ operatorsCount - 2 ].type = '(';
+    operatorsSet[ operatorsCount - 2 ].priority = maxPriority;
+    operatorsSet[ operatorsCount - 2 ].associativity = 1;
+
+    operatorsSet[ operatorsCount - 1 ].symbol = ')';
+    operatorsSet[ operatorsCount - 1 ].type = ')';
+    operatorsSet[ operatorsCount - 1 ].priority = maxPriority;
+    operatorsSet[ operatorsCount - 1 ].associativity = 1;
+    operatorsFile.close();
+
+/*
+    for(size_t i = 0; i < operatorsCount; ++i){
+        std :: cout << operatorsSet[i].symbol << ' '
                     << operatorsSet[i].type << ' '
                     << operatorsSet[i].priority << ' '
                     << operatorsSet[i].associativity << ' '  << std :: endl;
+    }
 */
-        }
-
-
-    operatorsFile.close();
 }
 
-operators :: ~operators(){
+Operators :: ~Operators(){
     clear();
 }
 
-void operators :: clear(){
+void Operators :: clear(){
     delete operatorsSet;
 }
 
-size_t operators :: getCount() const{
+size_t Operators :: getCount() const{
     return operatorsCount;
 }
 
-operatorConf operators :: getOperator(char op) const{
+const OperatorConf Operators::getOperator(char op) const{
     if( !isOperator(op) ){
         ///exception
     }
@@ -63,7 +80,7 @@ operatorConf operators :: getOperator(char op) const{
     }
 }
 
-bool operators :: isOperator(char op) const{
+bool Operators :: isOperator(char op) const{
     bool exist = false;
 
     //check all operators for coincidence
