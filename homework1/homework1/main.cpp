@@ -78,13 +78,13 @@ size_t getDigitsCount(T number){
 
 int main(){
 
-    char filePath[] = "../homework1/files/simpleTest";
+    char filePath[] = "../homework1/files/ops";
     operators op(filePath);
     Stack<double> numbers;
     Stack<char> operations;
     //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
     //char input[] = "5 a 2 b 3 c 7";
-    char input[] = "2 * ( 12 - 3 ) + 1 * ( 3 * ( 5 - 2 * ( 1 - 1 ) ) )";
+    char input[] = "( 2 + 7 ) * 3";
     size_t length = strlen(input);
 
     double temp;
@@ -189,7 +189,12 @@ int main(){
         numbers.push(calculateOperator<double>(opr.type, left, right) );
     }
 
-    std :: cout << "result " << numbers.pop() << std :: endl ;
+//    std::cout.precision(15);
+
+
+//    std::cout << std::scientific;
+    std::cout << numbers.pop() << std :: endl;
+    //std :: cout << std :: fixed  << numbers.pop() << std :: endl ;
   /* while (!numbers.isEmpty()) {
         std :: cout << "! "<< numbers.pop() << std :: endl;
     }
@@ -200,10 +205,6 @@ int main(){
         std :: cout << operations.pop() << std :: endl;
     }
 */
-///
-
-
-
     return 0;
 }
 //    QCoreApplication a(argc, argv);
