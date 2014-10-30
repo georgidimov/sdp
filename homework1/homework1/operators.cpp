@@ -26,12 +26,12 @@ operators :: operators(const char *filePath)
         operatorsFile >> operatorsSet[i].priority;
         operatorsFile >> operatorsSet[i].associativity;
 
-        /*
-        std :: cout << operatorsSet[i].symbol << ' '
+
+/*        std :: cout << operatorsSet[i].symbol << ' '
                     << operatorsSet[i].type << ' '
                     << operatorsSet[i].priority << ' '
                     << operatorsSet[i].associativity << ' '  << std :: endl;
-        */
+*/
         }
 
 

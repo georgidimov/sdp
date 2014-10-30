@@ -33,8 +33,9 @@ bool isDigit(char symbol){
     return symbol >= '0' && symbol <= '9';
 }
 
-int getNumber(char * start){
-    int result = 0;
+template <class T>
+T getNumber(char * start){
+    T result = 0;
     int i = 0;
     bool isNegative = false;
 
@@ -58,7 +59,8 @@ int getNumber(char * start){
     return result;
 }
 
-size_t getDigitsCount(int number){
+template <class T>
+size_t getDigitsCount(T number){
     size_t digitsCount = 0;
     if (number < 0){
         ++digitsCount;
@@ -76,20 +78,22 @@ size_t getDigitsCount(int number){
 
 int main(){
 
-    char filePath[] = "../homework1/files/ops";
+    char filePath[] = "../homework1/files/simpleTest";
     operators op(filePath);
-    Stack<int> numbers;
+    Stack<double> numbers;
     Stack<char> operations;
     //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
-    char input[] = "5 a 2 b 3 c 7";
-
+    //char input[] = "5 a 2 b 3 c 7";
+    char input[] = "-5 / -2 / 2";
     size_t length = strlen(input);
 
-    int temp;
+    double temp;
 
     for(size_t i = 0; i < length; ++i){
         if( ( input[i] == '-' && isDigit(input[i + 1]) ) || isDigit(input[i]) ){
-            temp = getNumber(&input[i]);
+            temp = getNumber<double>(&input[i]);
+            std :: cout << temp << " !";
+            i += getDigitsCount(temp);
             numbers.push(temp);
         }else if( op.isOperator(input[i]) || input[i] == '(' || input[i] == ')' ){
             /// )
@@ -100,14 +104,11 @@ int main(){
                 operatorConf topOp = op.getOperator( operations.pop() );
 
                 if( currentOp.priority < topOp.priority ){
-                    ///operations.push(topOp.symbol);
-                    ///operations.push(currentOp.symbol);
-
                     while(currentOp.priority < topOp.priority ){
-                        int right = numbers.pop();
-                        int left = numbers.pop();
-
-                        numbers.push( calculateOperator<int>(topOp.type, left, right) );
+                        double right = numbers.pop();
+                        double left = numbers.pop();
+                        //std :: cout <<  calculateOperator<double>(topOp.type, left, right);
+                        numbers.push( calculateOperator<double>(topOp.type, left, right) );
                         if ( operations.isEmpty() ){
                             break;
                         }
@@ -125,9 +126,10 @@ int main(){
                             operations.push(currentOp.symbol);
                         }else{
                             ///type
-                            int right = numbers.pop();
-                            int left = numbers.pop();
-                            numbers.push( calculateOperator<int>(topOp.type, left, right) );
+                            double right = numbers.pop();
+                            double left = numbers.pop();
+                            //std :: cout << "!" <<  calculateOperator<double>(topOp.type, left, right) ;
+                            numbers.push( calculateOperator<double>(topOp.type, left, right) );
                             operations.push( currentOp.symbol );
                             //.pop.pop OP pop
                         }
@@ -143,15 +145,14 @@ int main(){
     }
 
     while( !operations.isEmpty() ){
-        int right = numbers.pop();
-        int left = numbers.pop();
+        double right = numbers.pop();
+        double left = numbers.pop();
         operatorConf opr = op.getOperator( operations.pop() );
-        numbers.push( calculateOperator<int>(opr.type, left, right) );
+        //std :: cout << "!!"<< calculateOperator<double>(opr.type, left, right);
+        numbers.push(calculateOperator<double>(opr.type, left, right) );
     }
 
     std :: cout << "result " << numbers.pop();
-
-
   /* while (!numbers.isEmpty()) {
         std :: cout << "! "<< numbers.pop() << std :: endl;
     }
