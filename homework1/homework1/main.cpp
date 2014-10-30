@@ -84,7 +84,7 @@ int main(){
     Stack<char> operations;
     //char input[] = "31 a ( 5 b 32 f 10 e -230 ) c 324 d 17";
     //char input[] = "5 a 2 b 3 c 7";
-    char input[] = "-5 / -2 / 2";
+    char input[] = "2 * (3 - 7 ) + (1 + 2 )";
     size_t length = strlen(input);
 
     double temp;
@@ -92,51 +92,79 @@ int main(){
     for(size_t i = 0; i < length; ++i){
         if( ( input[i] == '-' && isDigit(input[i + 1]) ) || isDigit(input[i]) ){
             temp = getNumber<double>(&input[i]);
-            std :: cout << temp << " !";
             i += getDigitsCount(temp);
+
             numbers.push(temp);
         }else if( op.isOperator(input[i]) || input[i] == '(' || input[i] == ')' ){
             /// )
             if( operations.isEmpty() ){
+                if(input[i] == ')'){
+                    ///exception
+                }
+
                 operations.push(input[i]);
             }else{
-                operatorConf currentOp = op.getOperator(input[i]);
-                operatorConf topOp = op.getOperator( operations.pop() );
+                if( input[i] == '(' ){
+                    operations.push( input[i] );
+                }else if( input[i] == ')' ){
+                    char tempOperator = operations.pop();
 
-                if( currentOp.priority < topOp.priority ){
-                    while(currentOp.priority < topOp.priority ){
-                        double right = numbers.pop();
-                        double left = numbers.pop();
-                        //std :: cout <<  calculateOperator<double>(topOp.type, left, right);
-                        numbers.push( calculateOperator<double>(topOp.type, left, right) );
-                        if ( operations.isEmpty() ){
-                            break;
-                        }
+                    double right;
+                    double left;
 
-                        topOp = op.getOperator( operations.pop() );
+
+                    ///exception if numbers is empty
+                    while(tempOperator != '('){
+                        right = numbers.pop();
+                        left = numbers.pop();
+                        numbers.push( calculateOperator<double>(tempOperator, left, right) );
+                        tempOperator = operations.pop();
                     }
 
-                    operations.push( currentOp.symbol );
-                }else if( currentOp.priority == topOp.priority ){
-                    if( currentOp.associativity != topOp.associativity ){
-                        ///exception
-                    }else{
-                        if(currentOp.associativity == 1){    //rigth associativity
-                            operations.push(topOp.symbol);
-                            operations.push(currentOp.symbol);
-                        }else{
-                            ///type
+
+                    ///exception if ( not exist
+                }else{
+                    operatorConf currentOp = op.getOperator(input[i]);
+                    operatorConf topOp = op.getOperator( operations.pop() );
+
+                    if(topOp.symbol == '('){
+                        operations.push( topOp.symbol );
+                        operations.push( currentOp.symbol );
+                    }else if( currentOp.priority < topOp.priority ){
+                        while(  currentOp.priority < topOp.priority ){
                             double right = numbers.pop();
                             double left = numbers.pop();
-                            //std :: cout << "!" <<  calculateOperator<double>(topOp.type, left, right) ;
+                            //std :: cout <<  calculateOperator<double>(topOp.type, left, right);
                             numbers.push( calculateOperator<double>(topOp.type, left, right) );
-                            operations.push( currentOp.symbol );
-                            //.pop.pop OP pop
+                            if ( operations.isEmpty() ){
+                                break;
+                            }
+
+                            topOp = op.getOperator( operations.pop() );
                         }
+
+                        operations.push( currentOp.symbol );
+                    }else if( currentOp.priority == topOp.priority ){
+                        if( currentOp.associativity != topOp.associativity ){
+                            ///exception
+                        }else{
+                            if(currentOp.associativity == 1){    //rigth associativity
+                                operations.push(topOp.symbol);
+                                operations.push(currentOp.symbol);
+                            }else{
+                                ///type
+                                double right = numbers.pop();
+                                double left = numbers.pop();
+                                //std :: cout << "!" <<  calculateOperator<double>(topOp.type, left, right) ;
+                                numbers.push( calculateOperator<double>(topOp.type, left, right) );
+                                operations.push( currentOp.symbol );
+                                //.pop.pop OP pop
+                            }
+                        }
+                    }else{
+                        operations.push(topOp.symbol);
+                        operations.push(currentOp.symbol);
                     }
-                }else{
-                    operations.push(topOp.symbol);
-                    operations.push(currentOp.symbol);
                 }
             }
         }else if( input[i] != ' ' ){
