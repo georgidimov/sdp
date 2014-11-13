@@ -1,8 +1,9 @@
 #include <QCoreApplication>
 #include <iostream>
-#include <node.h>
+#include <queue.h>
 
 int main(){
-
+    Queue<int> q;
+    std :: cout << q.getSize();
     return 0;
 }
