@@ -16,6 +16,8 @@ public:
     T dequeue();
 
     size_t getSize() const;
+
+    bool isEmpty() const;
 };
 
 template <class T>
@@ -63,4 +65,9 @@ T Queue<T> :: dequeue(){
     --size;
 
     return firstValue;
+}
+
+template <class T>
+bool Queue<T> :: isEmpty() const{
+    return size == 0;
 }
