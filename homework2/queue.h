@@ -12,6 +12,9 @@ public:
     Queue();
     ~Queue();
 
+    void enqueue(T newElement);
+    T dequeue();
+
     size_t getSize() const;
 };
 
@@ -30,4 +33,34 @@ Queue<T> :: ~Queue(){
 template <class T>
 size_t Queue<T> :: getSize() const{
     return size;
+}
+
+template <class T>
+void Queue<T> :: enqueue(T newElement){
+    Node<T> * newNode = new Node<T>(newElement, NULL);
+
+    if(size == 0){
+        first = last = newNode;
+    }
+
+    last->setNext(newNode);
+    last = newNode;
+
+    ++size;
+}
+
+template <class T>
+T Queue<T> :: dequeue(){
+    Node<T> * tempNode = first;
+
+    //remove first from the chain
+    first = first->getNext();
+    tempNode->setNext(NULL);
+
+    T firstValue = tempNode->getValue();
+
+    delete tempNode;
+    --size;
+
+    return firstValue;
 }

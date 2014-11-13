@@ -4,6 +4,12 @@
 
 int main(){
     Queue<int> q;
-    std :: cout << q.getSize();
+    q.enqueue(4);
+    q.enqueue(5);
+
+    while( q.getSize() ){
+        std :: cout << q.dequeue() << std :: endl;
+    }
+
     return 0;
 }
