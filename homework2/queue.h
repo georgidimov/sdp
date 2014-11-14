@@ -18,6 +18,13 @@ public:
     size_t getSize() const;
 
     bool isEmpty() const;
+
+protected:/*
+    class Iterator{
+        Node<T> * current;
+    public:
+        Iterator(Node<T> * startElement);
+    };*/
 };
 
 template <class T>
@@ -71,3 +78,9 @@ template <class T>
 bool Queue<T> :: isEmpty() const{
     return size == 0;
 }
+/*
+template <class T>
+Queue<T> :: Iterator :: Iterator(Node<T> * startElement){
+    current = startElement;
+}
+*/
