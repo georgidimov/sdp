@@ -10,6 +10,7 @@ class Queue{
     size_t size;
 public:
     Queue();
+    Queue(const Queue & o);
     ~Queue();
 
     void enqueue(T newElement);
@@ -30,13 +31,17 @@ public:
 
         Iterator & operator ++();
         const Iterator & operator ++() const;
+
         //bool operator == (const Iterator &) const;
         //bool operator != (const Iterator &) const;
         operator bool() const;
     };
 
-    Iterator begin();
+    Iterator begin(); ///add non const
+    Iterator begin() const; ///add non const
+
     Iterator end();
+    Iterator end() const;
 };
 
 template <class T>
@@ -44,6 +49,22 @@ Queue<T> :: Queue(){
     first = NULL;
     last = NULL;
     size = 0;
+}
+
+template <class T>
+Queue<T> :: Queue(const Queue & o){
+    if(&o == this){  //check for self-assignment
+        return;
+    }
+
+    first = NULL;
+    last = NULL;
+    size = 0;
+
+    for(Queue<T>::Iterator i = o.begin(); i; ++i){
+        enqueue(*i);
+    }
+
 }
 
 template <class T>
@@ -110,7 +131,17 @@ typename Queue<T> :: Iterator Queue<T> :: begin(){
 }
 
 template <class T>
+typename Queue<T> :: Iterator Queue<T> :: begin() const{
+    return Iterator(first);
+}
+
+template <class T>
 typename Queue<T> :: Iterator Queue<T> :: end(){
+    return Iterator(last);
+}
+
+template <class T>
+typename Queue<T> :: Iterator Queue<T> :: end() const{
     return Iterator(last);
 }
 
