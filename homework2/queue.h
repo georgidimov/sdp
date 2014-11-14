@@ -14,6 +14,9 @@ public:
 
     void enqueue(T newElement);
     T dequeue();
+    const T & peek() const;
+
+
 
     size_t getSize() const;
 
@@ -27,10 +30,8 @@ public:
 
         Iterator & operator ++();
         const Iterator & operator ++() const;
-
-        bool operator == (const Iterator & rh) const;
-        //bool operator != (const Iterator & rh) const;
-
+        //bool operator == (const Iterator &) const;
+        //bool operator != (const Iterator &) const;
         operator bool() const;
     };
 
@@ -89,6 +90,11 @@ T Queue<T> :: dequeue(){
 }
 
 template <class T>
+const T & Queue<T> :: peek() const{
+    return first->getValue();
+}
+
+template <class T>
 bool Queue<T> :: isEmpty() const{
     return size == 0;
 }
@@ -135,18 +141,6 @@ typename Queue<T> :: Iterator const & Queue<T> :: Iterator :: operator ++() cons
     return * this;
 }
 
-template <class T>
-bool Queue<T> :: Iterator :: operator == (const Iterator & rh) const{
-    std :: cout << "call";
-    return current == rh.current;
-}
-/*
-template <class T>
-bool Queue<T> :: Iterator :: operator != (const Iterator & rh) const{
-    std :: cout << "call";
-    return !this == rh;
-}
-*/
 template <class T>
 Queue<T> :: Iterator :: operator bool() const{
     return current != NULL;
