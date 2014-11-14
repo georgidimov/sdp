@@ -4,12 +4,17 @@
 
 int main(){
     Queue<int> q;
-    q.enqueue(4);
-    q.enqueue(5);
-
-    while( q.getSize() ){
-        std :: cout << q.dequeue() << std :: endl;
+    for(size_t i = 0; i < 10; ++i){
+        q.enqueue(i + 1);
     }
 
-    return 0;
+    std :: cout << *q.end()<< "  " << std :: endl << std :: endl << std :: endl;
+    for(Queue<int> :: Iterator i = q.begin(); i; ++i){
+        std :: cout << *i << ' ';
+    }
+
+    std :: cout << q.getSize() << std :: endl << std :: endl;
+
+    //std :: cout << std :: endl << q.begin() << "  " << q.end() << std :: endl
+    //              << q.begin() == q.end();
 }

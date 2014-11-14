@@ -19,12 +19,23 @@ public:
 
     bool isEmpty() const;
 
-protected:/*
     class Iterator{
         Node<T> * current;
     public:
         Iterator(Node<T> * startElement);
-    };*/
+        const T & operator *() const;
+
+        Iterator & operator ++();
+        const Iterator & operator ++() const;
+
+        bool operator == (const Iterator & rh) const;
+        //bool operator != (const Iterator & rh) const;
+
+        operator bool() const;
+    };
+
+    Iterator begin();
+    Iterator end();
 };
 
 template <class T>
@@ -60,6 +71,9 @@ void Queue<T> :: enqueue(T newElement){
 
 template <class T>
 T Queue<T> :: dequeue(){
+    if (!first){
+        throw "empty stack";
+    }
     Node<T> * tempNode = first;
 
     //remove first from the chain
@@ -78,9 +92,65 @@ template <class T>
 bool Queue<T> :: isEmpty() const{
     return size == 0;
 }
-/*
+
 template <class T>
 Queue<T> :: Iterator :: Iterator(Node<T> * startElement){
     current = startElement;
 }
+
+template <class T>
+typename Queue<T> :: Iterator Queue<T> :: begin(){
+    return Iterator(first);
+}
+
+template <class T>
+typename Queue<T> :: Iterator Queue<T> :: end(){
+    return Iterator(last);
+}
+
+template <class T>
+const T & Queue<T> :: Iterator :: operator * () const{
+    if (current != NULL){
+        return current->getValue();
+    }
+
+    throw "empty queue";
+}
+
+template <class T>
+typename Queue<T> :: Iterator & Queue<T> :: Iterator :: operator ++(){
+    if( current ){
+        current = current->getNext();
+    }
+
+    return * this;
+}
+
+template <class T>
+typename Queue<T> :: Iterator const & Queue<T> :: Iterator :: operator ++() const{
+    if( current ){
+        current = current->getNext();
+    }
+
+    return * this;
+}
+
+template <class T>
+bool Queue<T> :: Iterator :: operator == (const Iterator & rh) const{
+    std :: cout << "call";
+    return current == rh.current;
+}
+/*
+template <class T>
+bool Queue<T> :: Iterator :: operator != (const Iterator & rh) const{
+    std :: cout << "call";
+    return !this == rh;
+}
 */
+template <class T>
+Queue<T> :: Iterator :: operator bool() const{
+    return current != NULL;
+}
+
+
+

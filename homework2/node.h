@@ -12,7 +12,7 @@ public:
     Node * getNext() const;
     void setNext(Node * newNext);
 
-    T getValue() const;
+    const T & getValue() const;
     void setValue(T newValue);
 };
 
@@ -45,7 +45,7 @@ void Node<T> :: setNext(Node<T> * newNext){
 }
 
 template <class T>
-T Node<T> :: getValue() const{
+const T & Node<T> :: getValue() const{
     return value;
 }
 
