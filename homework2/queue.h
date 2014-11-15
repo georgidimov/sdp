@@ -192,7 +192,7 @@ Queue<T> Queue<T> :: split(){
 
     Node<T> * tempNode = first;
 
-    for(size_t i = 0; i < newQueueSize; ++i){
+    for(size_t i = 0; i < newQueueSize - 1; ++i){
         if( tempNode ){
             tempNode = tempNode->getNext();
         }else{
@@ -200,7 +200,11 @@ Queue<T> Queue<T> :: split(){
         }
     }
 
-    Queue <T> newQueue();
+    Queue <T> newQueue(tempNode->getNext(), size - newQueueSize);
+
+    tempNode->setNext(NULL);
+    size = newQueueSize;
+
     return newQueue;
 }
 
