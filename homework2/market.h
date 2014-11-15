@@ -5,10 +5,16 @@
 #include <clientState.h>
 
 class Market{
-    int cashNumers;
+    int cashCount;  // or N
 
     Queue<Client *> * cashes;
     bool * openCashes;
+
+    Queue<Client *> expressCash;
+
+    int expressCashGoodsLimit;
+
+    size_t shortestQueue() const;
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();
