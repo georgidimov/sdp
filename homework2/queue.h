@@ -11,6 +11,7 @@ class Queue{
 public:
     Queue();
     Queue(const Queue & o);
+    Queue(Node<T> * newFirst, size_t newSize);
     ~Queue();
 
     Queue & operator = (const Queue & o);
@@ -69,6 +70,25 @@ Queue<T> :: Queue(const Queue & o){
         enqueue(*i);
     }
 
+}
+
+template <class T>
+Queue<T> :: Queue(Node<T> * newFirst, size_t newSize){
+    first = newFirst;
+
+    Node<T> * tempNode = first;
+
+    for(size_t i = 0; i < newSize - 1; i++){
+        if( tempNode ){
+            tempNode = tempNode->getNext();
+        }else{
+            throw "invalid queue size";
+        }
+    }
+
+
+    last = tempNode;
+    size = newSize;
 }
 
 template <class T>
@@ -164,6 +184,24 @@ typename Queue<T> :: Iterator Queue<T> :: end(){
 template <class T>
 typename Queue<T> :: Iterator Queue<T> :: end() const{
     return Iterator(last);
+}
+
+template <class T>
+Queue<T> Queue<T> :: split(){
+    size_t newQueueSize = size / 2;
+
+    Node<T> * tempNode = first;
+
+    for(size_t i = 0; i < newQueueSize; ++i){
+        if( tempNode ){
+            tempNode = tempNode->getNext();
+        }else{
+            throw "invalid size";
+        }
+    }
+
+    Queue <T> newQueue();
+    return newQueue;
 }
 
 template <class T>
