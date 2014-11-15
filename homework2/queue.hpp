@@ -124,10 +124,10 @@ void Queue<T> :: enqueue(T newElement){
 
     if(size == 0){
         first = last = newNode;
+    }else{
+        last->setNext(newNode);
+        last = newNode;
     }
-
-    last->setNext(newNode);
-    last = newNode;
 
     ++size;
 }
