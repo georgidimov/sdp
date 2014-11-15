@@ -5,7 +5,7 @@
 #include <clientState.h>
 
 class Market{
-    int cashCount;  // or N
+    size_t cashCount;  // or N
 
     Queue<Client *> * cashes;
     bool * openCashes;
@@ -17,6 +17,7 @@ class Market{
     size_t shortestQueue() const;
 
     void manageQueues();
+    size_t openCash();
 
     int IDs; //FIXME
 public:
