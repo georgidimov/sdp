@@ -1,0 +1,4 @@
+#ifndef CLIENTSTATE_HPP
+#define CLIENTSTATE_HPP
+
+#endif // CLIENTSTATE_HPP
