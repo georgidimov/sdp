@@ -13,6 +13,8 @@ public:
     Queue(const Queue & o);
     ~Queue();
 
+    Queue & operator = (const Queue & o);
+
     void enqueue(T newElement);
     T dequeue();
     const T & peek() const;
@@ -42,6 +44,8 @@ public:
 
     Iterator end();
     Iterator end() const;
+
+    Queue split();
 };
 
 template <class T>
@@ -54,7 +58,7 @@ Queue<T> :: Queue(){
 template <class T>
 Queue<T> :: Queue(const Queue & o){
     if(&o == this){  //check for self-assignment
-        return;
+        throw "invalid assignment";
     }
 
     first = NULL;
@@ -70,6 +74,23 @@ Queue<T> :: Queue(const Queue & o){
 template <class T>
 Queue<T> :: ~Queue(){
     delete first;
+}
+
+template <class T>
+Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
+    if(this == &o){  //check for self-assignment
+        return * this;
+    }
+
+    //destroy current data
+    delete first;
+    size = 0;
+
+    for(Queue<T>::Iterator i = o.begin(); i; ++i){
+        enqueue(*i);
+    }
+
+    return *this;
 }
 
 template <class T>
