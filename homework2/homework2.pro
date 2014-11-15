@@ -15,11 +15,13 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    market.cpp
 
 HEADERS += \
     node.hpp \
     queue.hpp \
     clientState.h \
     marketState.h \
-    client.h
+    client.h \
+    market.h
