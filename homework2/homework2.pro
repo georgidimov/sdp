@@ -19,4 +19,7 @@ SOURCES += main.cpp
 
 HEADERS += \
     node.hpp \
-    queue.hpp
+    queue.hpp \
+    clientState.h \
+    marketState.h \
+    client.h
