@@ -6,7 +6,9 @@
 
 class Market{
     int cashNumers;
+
     Queue<Client *> * cashes;
+    bool * openCashes;
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();
