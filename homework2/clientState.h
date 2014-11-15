@@ -1,4 +1,7 @@
-#ifndef CLIENTSTATE_HPP
-#define CLIENTSTATE_HPP
+#pragma once
 
-#endif // CLIENTSTATE_HPP
+struct ClientState{
+    int CashDeskPosition;
+    int QueuePosition;
+    Client * client;
+};
