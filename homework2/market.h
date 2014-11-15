@@ -15,6 +15,10 @@ class Market{
     int expressCashGoodsLimit;
 
     size_t shortestQueue() const;
+
+    void manageQueues();
+
+    int IDs; //FIXME
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();

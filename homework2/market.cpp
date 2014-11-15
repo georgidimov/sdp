@@ -14,6 +14,7 @@ Market :: Market(int NumberOfAllCashDecks){
     }
 
     expressCashGoodsLimit = 3;
+    IDs = 0;
 }
 
 Market :: ~Market(){
@@ -29,35 +30,33 @@ size_t Market :: shortestQueue() const{
     int clientsCount = -1;
 
     for(int i = 0; i < cashCount; ++i){
-        if(openCashes[i] && cashes[i].getSize() < clientsCount){
+        if(openCashes[i] && (int)cashes[i].getSize() < clientsCount){
             clientsCount = cashes[i].getSize();
             shortestQueueIndex = i;
         }
     }
-
-    for(size_t i = 0; i < cashCount; ++i){
-        std :: cout << i << " => "  << cashes[i].getSize() << std :: endl;
-    }
-
-    std :: cout << std :: endl << "shortest queue is << " << shortestQueueIndex << std :: endl;
     return shortestQueueIndex;
+}
+
+void Market :: manageQueues(){
+
 }
 
 void Market :: AddClient(Client * clients, int number){
     for(int i = 0; i < number; ++i){
-        //check conditions for express cash
-        if(clients[i].numberOfGoods <= expressCashGoodsLimit &&
-           (int)expressCash.getSize() <  2 * cashCount){
+        if(clients[i].numberOfGoods != 0){  //the client has goods
+            //check conditions for express cash
+            if(clients[i].numberOfGoods <= expressCashGoodsLimit &&
+               (int)expressCash.getSize() <  2 * cashCount){
 
-            expressCash.enqueue(&clients[i]);
-        }else{  //go to normal cash
-            //std :: cout << "shortest queue is " << shortestQueue() << std :: endl;
-            cashes[ shortestQueue() ].enqueue(&clients[i]);
+                expressCash.enqueue(&clients[i]);
+            }else{  //go to normal cash
+                cashes[ shortestQueue() ].enqueue(&clients[i]);
+            }
         }
-    }
 
-    for(size_t i = 0; i < cashCount; ++i){
-       // std :: cout << i << " => "  << cashes[i].getSize() << std :: endl;
+        clients[i].ID = IDs;
+        IDs++;
     }
 }
 
