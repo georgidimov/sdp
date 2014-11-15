@@ -18,5 +18,5 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 HEADERS += \
-    node.h \
-    queue.h
+    node.hpp \
+    queue.hpp
