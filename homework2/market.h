@@ -28,5 +28,6 @@ public:
     void AddClient(Client * clients, int number);
     MarketState getMarketState() const;
     ClientState getClientState(int ID);
+
 };
 

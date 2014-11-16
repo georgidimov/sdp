@@ -11,7 +11,7 @@ Market :: Market(int NumberOfAllCashDecks){
     openCashes[0] = true;
 
     for(size_t i = 1; i < cashCount; ++i){
-        openCashes[i] = true;
+        openCashes[i] = false;
     }
 
     expressCashGoodsLimit = 3;
@@ -60,21 +60,18 @@ int Market :: openCash(){
 }
 
 void Market :: manageQueues(){
-    int currentCashCount;
+    size_t currentCashCount;
     for(size_t i = 0; i < cashCount; ++i){
         if(openCashes[i]){
             currentCashCount = cashes[i].getSize();
             if(currentCashCount > cashCount){ /// > N
-                /*
+
                 int newCashIndex = openCash();
 
                 if(newCashIndex > 0){
-                    for(size_t i = 0; i < cashCount; ++i){
-                        std :: cout << i << " size: " << cashes[i].getSize() << " => " <<
-                                       (openCashes[i] ? "opened" : "closed") << std :: endl;
-                    }
+                    cashes[newCashIndex] = cashes[i].split();
+                }
 
-                    cashes[newCashIndex] = cashes[i].split();*/
             }else if(currentCashCount < cashCount / 10){
                 while(!cashes[i].isEmpty()){
                     std :: cout << " call";
@@ -108,11 +105,14 @@ void Market :: AddClient(Client * clients, int number){
 
 
     }
+
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i].getSize() << " => " <<
                        (openCashes[i] ? "opened" : "closed") << std :: endl;
     }
-}
 
+    std :: cout << std :: endl << "express cash now: " << std :: endl
+                << "size: " << expressCash.getSize() << " => " << "opened" << std :: endl;
+}
 
 
