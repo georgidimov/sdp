@@ -65,7 +65,19 @@ int Market :: openCash(){
 }
 
 void Market :: closeCash(size_t index){
-    //Client
+    if(openCashesCount == 1)
+        return;
+
+    openCashes[index] = false;
+    Client * tempClient;
+
+    while( cashes[index]->getSize() ){
+        tempClient = cashes[index]->dequeue();
+        tempClient->ID = 0;
+        addClientToQueue(tempClient);
+    }
+
+    --openCashesCount;
 }
 
 void Market :: manageQueues(){
@@ -85,9 +97,7 @@ void Market :: manageQueues(){
 
             }
             else if(currentCashCount < cashCount / 10){
-                while(!cashes[i]->isEmpty()){
-                    std :: cout << " call";
-                }
+                closeCash(i);
             }
 
         }
@@ -115,8 +125,6 @@ void Market :: addClientsToQueue(Client * clients, int number){
     for(int i = 0; i < number; ++i){
         manageQueues();
         addClientToQueue(&clients[i]);
-
-
     }
 }
 
