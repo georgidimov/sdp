@@ -18,7 +18,10 @@ public:
 
     List & operator = (const List & o);
 
+protected:
     void addAt(int index, T newElement);
+
+public:
     T removeAt(int index);
     const T & getAt(int index) const;
 
