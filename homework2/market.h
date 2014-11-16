@@ -20,10 +20,12 @@ class Market{
 
     void manageQueues();
     int openCash();
+    void closeCash(size_t index);
 
     int IDs; //FIXME
 
-    void AddClientToQueue(Client * clients, int clientsCount);
+    void addClientsToQueue(Client * clients, int clientsCount);
+    void addClientToQueue(Client * clients);
     void processClients();
 
     void checkClient(Queue<Client *> * cash);

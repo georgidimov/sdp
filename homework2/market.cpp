@@ -64,6 +64,10 @@ int Market :: openCash(){
     return -1;
 }
 
+void Market :: closeCash(size_t index){
+    //Client
+}
+
 void Market :: manageQueues(){
     size_t currentCashCount;
     for(size_t i = 0; i < cashCount; ++i){
@@ -77,7 +81,10 @@ void Market :: manageQueues(){
                     cashes[i]->split(*cashes[newCashIndex]);
                 }
 
-            }else if(currentCashCount < cashCount / 10){
+            }else if(false){ ///N/8
+
+            }
+            else if(currentCashCount < cashCount / 10){
                 while(!cashes[i]->isEmpty()){
                     std :: cout << " call";
                 }
@@ -87,23 +94,27 @@ void Market :: manageQueues(){
     }
 }
 
-void Market :: AddClientToQueue(Client * clients, int number){
+void Market :: addClientToQueue(Client * client){
+    if(client->numberOfGoods != 0){  //the client has goods
+        //check conditions for express cash
+        if(client->numberOfGoods <= expressCashGoodsLimit &&
+           expressCash.getSize() <  2 * cashCount){
+
+            expressCash.enqueue(client);
+        }else{  //go to normal cash
+            cashes[ shortestQueue() ]->enqueue(client);
+        }
+    }
+
+    client->ID = IDs;
+    IDs++;
+
+}
+
+void Market :: addClientsToQueue(Client * clients, int number){
     for(int i = 0; i < number; ++i){
         manageQueues();
-
-        if(clients[i].numberOfGoods != 0){  //the client has goods
-            //check conditions for express cash
-            if(clients[i].numberOfGoods <= expressCashGoodsLimit &&
-               expressCash.getSize() <  2 * cashCount){
-
-                expressCash.enqueue(&clients[i]);
-            }else{  //go to normal cash
-                cashes[ shortestQueue() ]->enqueue(&clients[i]);
-            }
-        }
-
-        clients[i].ID = IDs;
-        IDs++;
+        addClientToQueue(&clients[i]);
 
 
     }
@@ -134,7 +145,7 @@ void Market :: processClients(){
 }
 
 void Market :: AddClient(Client * clients, int number){
-    AddClientToQueue(clients, number);
+    addClientsToQueue(clients, number);
     processClients();
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i]->getSize() << " => " <<
