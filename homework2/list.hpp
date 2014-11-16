@@ -8,6 +8,7 @@ class List{
     Node<T> * last;
 
     size_t size;
+    Node<T> * & getNodeAt(int index);
 public:
     List();
     List(const List & o);
@@ -16,7 +17,7 @@ public:
 
     //List & operator = (const Queue & o);
 
-    void add(T newElement);
+    void addAt(int index, T newElement);
     T removeAt(int index);
     const T & getAt(int index) const;
 
@@ -92,7 +93,28 @@ Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
 }
 */
 template <class T>
-void List<T> :: add(T newElement){
+void List<T> :: addAt(int index, T newElement){
+    if(index < 0 || index > size + 1){
+        throw "invalid index";
+    }
+
+    Node<T> * newNode = new Node<T>(newElement, NULL);
+
+    if(index == 0){
+        if(size == 0){
+            first = last = newNode;
+        }else{
+            newNode->setNext(first);
+            first = newNode;
+        }
+    }else{
+        Node<T> * beforeNode = getNodeAt(index - 1);
+        newNode->setNext(beforeNode->getNext());
+
+        beforeNode->setNext(newNode);
+    }
+
+    /*
     Node<T> * newNode = new Node<T>(newElement, NULL);
 
     if(size == 0){
@@ -101,7 +123,7 @@ void List<T> :: add(T newElement){
         last->setNext(newNode);
         last = newNode;
     }
-
+    */
     ++size;
 }
 
@@ -158,6 +180,25 @@ const T & List<T> :: getAt(int index) const{
         }
 
         return node->getValue();
+    }
+}
+
+template <class T>
+Node<T> *&List<T>::getNodeAt(int index){
+    if (index < 0 || index > size){
+        throw "invalid index";
+    }
+
+    if(index == 0){
+        return first;
+    }else{
+        Node<T> * node = first;
+
+        for(int i = 0; i < index; ++i){
+            node = node->getNext();
+        }
+
+        return node;
     }
 }
 
