@@ -1,5 +1,5 @@
 
-
+using namespace std;
 void test_addOneByOne()
 {
 	cout << "Start test addOneByOne"<<endl ;
@@ -44,7 +44,7 @@ void test_expresCashDesk()
 	Client poor{ -1, 2, 0 }, rich{ -1, 10, 0 };
 
 	for (int i = 0; i < 5; i++)
-	{
+	{	
 		m.AddClient(&poor, 1);
 		m.AddClient(&rich, 1);
 	}
@@ -181,7 +181,7 @@ void test_creditCard()
 }
 
 
-
+/*
 int main()
 {
 	test_addOneByOne();
@@ -190,4 +190,4 @@ int main()
 	test_manyClientsInOneTick();
 	test_unloadMarket();
 	cin.get();
-}
+}*/

@@ -80,8 +80,24 @@ void Market :: closeCash(size_t index){
     --openCashesCount;
 }
 
+
+bool Market::bigDifference(int & index) const{
+    for(size_t i = 0; i < cashCount; ++i){
+        for(size_t j = 0; j < cashCount; ++j){
+            if(openCashes[i] && openCashes[j]){
+                if( abs(cashes[i]->getSize() -  cashes[j]->getSize()) > (int)cashCount / 8){
+                    index = cashes[i]->getSize() > cashes[j]->getSize() ? i : j;
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
 void Market :: manageQueues(){
     size_t currentCashCount;
+    int bigDifferenceCash = -1;
     for(size_t i = 0; i < cashCount; ++i){
         if(openCashes[i]){
             currentCashCount = cashes[i]->getSize();
@@ -94,8 +110,12 @@ void Market :: manageQueues(){
                     return;
                 }
 
-            }else if(false){ ///N/8
+            }else if(bigDifference(bigDifferenceCash)){ ///N/8
+                int size = cashes[bigDifferenceCash]->getSize();
 
+                for(;size >= 0; size--){
+                    addClientToQueue(cashes[bigDifferenceCash]->dequeue());
+                }
             }
             else if(currentCashCount < cashCount / 10){
                 closeCash(i);
@@ -159,7 +179,7 @@ void Market :: AddClient(Client * clients, int number){
     addClientsToQueue(clients, number);
 
 
-
+/*
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i]->getSize() << " => " <<
                        (openCashes[i] ? "opened" : "closed") << std :: endl;
@@ -167,7 +187,7 @@ void Market :: AddClient(Client * clients, int number){
 
     std :: cout << std :: endl << "express cash now: " << std :: endl
                 << "size: " << expressCash.getSize() << " => " << "opened" << std :: endl;
-
+*/
 }
 
 MarketState Market :: getMarketState() const{

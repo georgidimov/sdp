@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 #include <queue.hpp>
 #include <marketState.h>
 #include <client.h>
@@ -29,6 +30,8 @@ class Market{
     void processClients();
 
     void checkClient(Queue<Client *> * cash);
+
+    bool bigDifference(int & index) const;
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();
