@@ -18,7 +18,7 @@ Market :: Market(int NumberOfAllCashDecks){
     }
 
     expressCashGoodsLimit = 3;
-    IDs = 0;
+    IDs = 1;
 
 }
 
@@ -109,9 +109,33 @@ void Market :: AddClientToQueue(Client * clients, int number){
     }
 }
 
+
+void Market :: checkClient(Queue<Client *> * cash){
+    Client * firstOnQueue = cash->peek();
+
+    if(!firstOnQueue->creditCard){
+        firstOnQueue->ID *= -1;
+        cash->dequeue();
+    }else{
+        firstOnQueue->creditCard = false;
+    }
+}
+
+void Market :: processClients(){
+    for(size_t i = 0; i < cashCount; ++i){
+        if(cashes[i] && cashes[i]->getSize()){ ///Remove getSize
+            checkClient(cashes[i]);
+        }
+    }
+
+    if(expressCash.getSize() > 0){
+        checkClient(&expressCash);
+    }
+}
+
 void Market :: AddClient(Client * clients, int number){
     AddClientToQueue(clients, number);
-
+    processClients();
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i]->getSize() << " => " <<
                        (openCashes[i] ? "opened" : "closed") << std :: endl;

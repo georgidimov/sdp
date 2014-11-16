@@ -24,6 +24,9 @@ class Market{
     int IDs; //FIXME
 
     void AddClientToQueue(Client * clients, int clientsCount);
+    void processClients();
+
+    void checkClient(Queue<Client *> * cash);
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();
