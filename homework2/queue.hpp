@@ -1,31 +1,33 @@
 #pragma once
 #include <iostream>
-#include <node.hpp>
+#include <list.hpp>
 
 template <class T>
-class Queue{
+class Queue : private List<T>{
+    /*
     Node<T> * first;
     Node<T> * last;
 
-    size_t size;
+    size_t size;*/
 public:
     Queue();
     Queue(const Queue & o);
+    /*
     Queue(Node<T> * newFirst, size_t newSize);
     ~Queue();
 
     Queue & operator = (const Queue & o);
-
+    */
     void enqueue(T newElement);
-    T dequeue();
+    T dequeue();/*
     const T & peek() const;
 
 
-
+    */
     size_t getSize() const;
 
     bool isEmpty() const;
-
+    /*
     class Iterator{
         Node<T> * current;
     public:
@@ -46,32 +48,19 @@ public:
     Iterator end();
     Iterator end() const;
 
-    Queue split();
+    Queue split();*/
 };
 
 template <class T>
-Queue<T> :: Queue(){
-    first = NULL;
-    last = NULL;
-    size = 0;
+Queue<T> :: Queue() : List<T>(){
+
 }
 
 template <class T>
-Queue<T> :: Queue(const Queue & o){
-    if(&o == this){  //check for self-assignment
-        throw "invalid assignment";
-    }
-
-    first = NULL;
-    last = NULL;
-    size = 0;
-
-    for(Queue<T>::Iterator i = o.begin(); i; ++i){
-        enqueue(*i);
-    }
+Queue<T> :: Queue(const Queue & o) : List<T>(o){
 
 }
-
+/*
 template <class T>
 Queue<T> :: Queue(Node<T> * newFirst, size_t newSize){
     first = newFirst;
@@ -112,45 +101,27 @@ Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
 
     return *this;
 }
-
+*/
 template <class T>
 size_t Queue<T> :: getSize() const{
-    return size;
+    return List<T> :: getSize();
 }
 
 template <class T>
 void Queue<T> :: enqueue(T newElement){
-    Node<T> * newNode = new Node<T>(newElement, NULL);
-
-    if(size == 0){
-        first = last = newNode;
-    }else{
-        last->setNext(newNode);
-        last = newNode;
-    }
-
-    ++size;
+    List<T> :: addAt(getSize(), newElement);
 }
 
 template <class T>
 T Queue<T> :: dequeue(){
-    if (!first){
+    if (!getSize()){
         throw "empty stack";
     }
-    Node<T> * tempNode = first;
 
-    //remove first from the chain
-    first = first->getNext();
-    tempNode->setNext(NULL);
-
-    T firstValue = tempNode->getValue();
-
-    delete tempNode;
-    --size;
-
-    return firstValue;
+    return List<T> :: removeAt(0);
 }
 
+/*
 template <class T>
 const T & Queue<T> :: peek() const{
     if (!first){
@@ -159,12 +130,12 @@ const T & Queue<T> :: peek() const{
 
     return first->getValue();
 }
-
+*/
 template <class T>
 bool Queue<T> :: isEmpty() const{
-    return size == 0;
+    return getSize() == 0;
 }
-
+/*
 template <class T>
 Queue<T> :: Iterator :: Iterator(Node<T> * startElement){
     current = startElement;
@@ -243,6 +214,7 @@ template <class T>
 Queue<T> :: Iterator :: operator bool() const{
     return current != NULL;
 }
+*/
 
 
 

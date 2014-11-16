@@ -116,16 +116,6 @@ void List<T> :: addAt(int index, T newElement){
         beforeNode->setNext(newNode);
     }
 
-    /*
-    Node<T> * newNode = new Node<T>(newElement, NULL);
-
-    if(size == 0){
-        first = last = newNode;
-    }else{
-        last->setNext(newNode);
-        last = newNode;
-    }
-    */
     ++size;
 }
 
