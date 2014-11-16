@@ -8,14 +8,15 @@ class List{
     Node<T> * last;
 
     size_t size;
-    Node<T> * & getNodeAt(int index);
+
+    Node<T> * getNodeAt(int index);
 public:
     List();
     List(const List & o);
-    //List(Node<T> * newFirst, size_t newSize);
+    List(const List & o, size_t startIndex);
     ~List();
 
-    //List & operator = (const Queue & o);
+    List & operator = (const List & o);
 
     void addAt(int index, T newElement);
     T removeAt(int index);
@@ -45,38 +46,37 @@ List<T> :: List(const List & o){
     last = NULL;
     size = 0;
 
-    //for(List<T>::Iterator i = o.begin(); i; ++i){
-    //    enqueue(*i);
-    //}
+    size_t oSize = o.getSize();
 
+    for(size_t i = 0; i < oSize; ++i){
+        addAt(i, o.getAt(i));
+    }
 }
-/*
+
 template <class T>
-Queue<T> :: Queue(Node<T> * newFirst, size_t newSize){
-    first = newFirst;
-
-    Node<T> * tempNode = first;
-
-    for(size_t i = 0; i < newSize - 1; i++){
-        if( tempNode ){
-            tempNode = tempNode->getNext();
-        }else{
-            throw "invalid queue size";
-        }
+List<T> :: List(const List & o, size_t startIndex){
+    if(&o == this){  //check for self-assignment
+        throw "invalid assignment";
     }
 
+    first = NULL;
+    last = NULL;
+    size = 0;
 
-    last = tempNode;
-    size = newSize;
+    size_t oSize = o.getSize();
+
+    for(size_t i = startIndex; i < oSize; ++i){
+        addAt(size, o.getAt(i));
+    }
 }
-*/
+
 template <class T>
 List<T> :: ~List(){
     delete first;
 }
-/*
+
 template <class T>
-Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
+List<T> & List<T> :: operator = (const List<T> & o){
     if(this == &o){  //check for self-assignment
         return * this;
     }
@@ -85,13 +85,15 @@ Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
     delete first;
     size = 0;
 
-    for(Queue<T>::Iterator i = o.begin(); i; ++i){
-        enqueue(*i);
+    size_t oSize = o.getSize();
+
+    for(size_t i = 0; i < oSize; ++i){
+        addAt(i, o.getAt(i));
     }
 
-    return *this;
+    return * this;
 }
-*/
+
 template <class T>
 void List<T> :: addAt(int index, T newElement){
     if(index < 0 || index > size + 1){
@@ -184,7 +186,7 @@ const T & List<T> :: getAt(int index) const{
 }
 
 template <class T>
-Node<T> *&List<T>::getNodeAt(int index){
+Node<T> * List<T>::getNodeAt(int index){
     if (index < 0 || index > size){
         throw "invalid index";
     }
