@@ -17,8 +17,9 @@ public:
     ~List();
 
     List & operator = (const List & o);
+    const T & operator [](int index) const;
+    T & operator [](int index);
 
-protected:
     void addAt(int index, T newElement);
 
 public:
@@ -95,6 +96,16 @@ List<T> & List<T> :: operator = (const List<T> & o){
     }
 
     return * this;
+}
+
+template <class T>
+const T & List<T> :: operator [](int index) const{
+    return getAt(index);
+}
+
+template <class T>
+T & List<T> :: operator [](int index){
+    return const_cast<T &>(getAt(index));
 }
 
 template <class T>

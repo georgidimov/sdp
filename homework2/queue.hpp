@@ -13,7 +13,7 @@ public:
 
     Queue & operator = (const Queue & o);
 
-    Queue split();
+    void split( Queue<T> & newQueue);
 
     void enqueue(T newElement);
     T dequeue();
@@ -73,7 +73,7 @@ Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
 }
 
 template <class T>
-Queue<T> Queue<T> :: split(){
+void Queue<T>::split(Queue<T> & newQueue){
     size_t middle = getSize() / 2;
 
     Queue<T> secondPart(*this, middle);
@@ -83,7 +83,7 @@ Queue<T> Queue<T> :: split(){
         List<T> :: removeAt(i);
     }
 
-    return secondPart;
+    newQueue = secondPart;
 }
 
 template <class T>

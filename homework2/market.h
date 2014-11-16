@@ -3,12 +3,12 @@
 #include <marketState.h>
 #include <client.h>
 #include <clientState.h>
-#include <assert.h>
+#include <list.hpp>
 
 class Market{
     size_t cashCount;  // or N
 
-    Queue<Client *> * cashes;
+    List<Queue<Client *> * > cashes;
     bool * openCashes;
 
     Queue<Client *> expressCash;
