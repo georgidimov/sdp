@@ -26,4 +26,5 @@ HEADERS += \
     clientState.h \
     marketState.h \
     client.h \
-    market.h
+    market.h \
+    list.hpp
