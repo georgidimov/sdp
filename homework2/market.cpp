@@ -11,6 +11,7 @@ Market :: Market(int NumberOfAllCashDecks){
 
     //open first cash and close everyone else
     openCashes[0] = true;
+    openCashesCount = 1;
 
     for(size_t i = 1; i < cashCount; ++i){
         openCashes[i] = false;
@@ -55,6 +56,7 @@ int Market :: openCash(){
     for(size_t i = 0; i < cashCount; ++i){
         if(!openCashes[i]){
             openCashes[i] = true;
+            ++openCashesCount;
             return (int)i;
         }
     }
@@ -85,7 +87,7 @@ void Market :: manageQueues(){
     }
 }
 
-void Market :: AddClient(Client * clients, int number){
+void Market :: AddClientToQueue(Client * clients, int number){
     for(int i = 0; i < number; ++i){
         manageQueues();
 
@@ -103,13 +105,12 @@ void Market :: AddClient(Client * clients, int number){
         clients[i].ID = IDs;
         IDs++;
 
-        if( i == number -2){
-
-        }
-
-
 
     }
+}
+
+void Market :: AddClient(Client * clients, int number){
+    AddClientToQueue(clients, number);
 
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i]->getSize() << " => " <<
@@ -118,6 +119,26 @@ void Market :: AddClient(Client * clients, int number){
 
     std :: cout << std :: endl << "express cash now: " << std :: endl
                 << "size: " << expressCash.getSize() << " => " << "opened" << std :: endl;
+
+}
+
+MarketState Market :: getMarketState() const{
+    MarketState result;
+
+    result.numberOfCashDesk = openCashesCount;
+    result.numberOfClientsAtExpressCashDeck = expressCash.getSize();
+
+    result.numberOfClientsAtCashDecsk = new int [openCashesCount];
+
+    int counter = 0;
+    for(size_t i = 0; i < cashCount; ++i){
+        if(openCashes[i]){
+            result.numberOfClientsAtCashDecsk [counter] = cashes[i]->getSize();
+            ++counter;
+        }
+    }
+
+    return result;
 }
 
 

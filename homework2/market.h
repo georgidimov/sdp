@@ -10,6 +10,7 @@ class Market{
 
     List<Queue<Client *> * > cashes;
     bool * openCashes;
+    size_t openCashesCount;
 
     Queue<Client *> expressCash;
 
@@ -21,6 +22,8 @@ class Market{
     int openCash();
 
     int IDs; //FIXME
+
+    void AddClientToQueue(Client * clients, int clientsCount);
 public:
     Market(int NumberOfAllCashDecks);
     ~Market();
@@ -28,6 +31,5 @@ public:
     void AddClient(Client * clients, int number);
     MarketState getMarketState() const;
     ClientState getClientState(int ID);
-
 };
 
