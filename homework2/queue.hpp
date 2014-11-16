@@ -7,12 +7,13 @@ class Queue : private List<T>{
 public:
     Queue();
     Queue(const Queue & o);
-    /*
-    Queue(Node<T> * newFirst, size_t newSize);*/
+
+    Queue(const Queue<T> & o, size_t startIndex);
     ~Queue();
 
-
     Queue & operator = (const Queue & o);
+
+    Queue split();
 
     void enqueue(T newElement);
     T dequeue();
@@ -40,9 +41,9 @@ public:
     Iterator begin() const;     ///add non const
 
     Iterator end();
-    Iterator end() const;
+    Iterator end() const;*/
 
-    Queue split();*/
+
 };
 
 template <class T>
@@ -52,28 +53,14 @@ Queue<T> :: Queue() : List<T>(){
 
 template <class T>
 Queue<T> :: Queue(const Queue & o) : List<T>(o){
-
+    ;
 }
-/*
+
 template <class T>
-Queue<T> :: Queue(Node<T> * newFirst, size_t newSize){
-    first = newFirst;
-
-    Node<T> * tempNode = first;
-
-    for(size_t i = 0; i < newSize - 1; i++){
-        if( tempNode ){
-            tempNode = tempNode->getNext();
-        }else{
-            throw "invalid queue size";
-        }
-    }
-
-
-    last = tempNode;
-    size = newSize;
+Queue<T> :: Queue(const Queue<T> & o, size_t startIndex) : List<T> :: List(o, startIndex){
+    ;
 }
-*/
+
 template <class T>
 Queue<T> :: ~Queue(){
     ;
@@ -82,20 +69,21 @@ Queue<T> :: ~Queue(){
 template <class T>
 Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
     List<T> :: operator =(o);
-    /*
-    if(this == &o){  //check for self-assignment
-        return * this;
-    }
-
-    //destroy current data
-    delete first;
-    size = 0;
-
-    for(Queue<T>::Iterator i = o.begin(); i; ++i){
-        enqueue(*i);
-    }
-    */
     return *this;
+}
+
+template <class T>
+Queue<T> Queue<T> :: split(){
+    size_t middle = getSize() / 2;
+
+    Queue<T> secondPart(*this, middle);
+
+    size_t size = getSize();
+    for(size_t i = middle; middle < size; ++middle){
+        List<T> :: removeAt(i);
+    }
+
+    return secondPart;
 }
 
 template <class T>
