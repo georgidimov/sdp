@@ -9,8 +9,10 @@ QT       += core
 QT       -= gui
 
 TARGET = homework2
+
 CONFIG   += console
 CONFIG   -= app_bundle
+CONFIG   += debug
 
 TEMPLATE = app
 

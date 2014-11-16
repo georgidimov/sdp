@@ -3,6 +3,7 @@
 #include <marketState.h>
 #include <client.h>
 #include <clientState.h>
+#include <assert.h>
 
 class Market{
     size_t cashCount;  // or N
@@ -17,7 +18,7 @@ class Market{
     size_t shortestQueue() const;
 
     void manageQueues();
-    size_t openCash();
+    int openCash();
 
     int IDs; //FIXME
 public:

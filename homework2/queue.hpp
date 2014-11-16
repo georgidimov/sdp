@@ -153,6 +153,10 @@ T Queue<T> :: dequeue(){
 
 template <class T>
 const T & Queue<T> :: peek() const{
+    if (!first){
+        throw "empty queue";
+    }
+
     return first->getValue();
 }
 
