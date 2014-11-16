@@ -4,26 +4,20 @@
 
 template <class T>
 class Queue : private List<T>{
-    /*
-    Node<T> * first;
-    Node<T> * last;
-
-    size_t size;*/
 public:
     Queue();
     Queue(const Queue & o);
     /*
-    Queue(Node<T> * newFirst, size_t newSize);
+    Queue(Node<T> * newFirst, size_t newSize);*/
     ~Queue();
 
+
     Queue & operator = (const Queue & o);
-    */
+
     void enqueue(T newElement);
-    T dequeue();/*
+    T dequeue();
     const T & peek() const;
 
-
-    */
     size_t getSize() const;
 
     bool isEmpty() const;
@@ -79,14 +73,16 @@ Queue<T> :: Queue(Node<T> * newFirst, size_t newSize){
     last = tempNode;
     size = newSize;
 }
-
+*/
 template <class T>
 Queue<T> :: ~Queue(){
-    delete first;
+    ;
 }
 
 template <class T>
 Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
+    List<T> :: operator =(o);
+    /*
     if(this == &o){  //check for self-assignment
         return * this;
     }
@@ -98,10 +94,10 @@ Queue<T> & Queue<T> :: operator = (const Queue<T> & o){
     for(Queue<T>::Iterator i = o.begin(); i; ++i){
         enqueue(*i);
     }
-
+    */
     return *this;
 }
-*/
+
 template <class T>
 size_t Queue<T> :: getSize() const{
     return List<T> :: getSize();
@@ -115,22 +111,22 @@ void Queue<T> :: enqueue(T newElement){
 template <class T>
 T Queue<T> :: dequeue(){
     if (!getSize()){
-        throw "empty stack";
+        throw "empty queue";
     }
 
     return List<T> :: removeAt(0);
 }
 
-/*
+
 template <class T>
 const T & Queue<T> :: peek() const{
-    if (!first){
+    if (!getSize()){
         throw "empty queue";
     }
 
-    return first->getValue();
+    return List<T> :: getAt(0);
 }
-*/
+
 template <class T>
 bool Queue<T> :: isEmpty() const{
     return getSize() == 0;
