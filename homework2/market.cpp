@@ -91,6 +91,7 @@ void Market :: manageQueues(){
 
                 if(newCashIndex > 0){
                     cashes[i]->split(*cashes[newCashIndex]);
+                    return;
                 }
 
             }else if(false){ ///N/8
@@ -98,6 +99,7 @@ void Market :: manageQueues(){
             }
             else if(currentCashCount < cashCount / 10){
                 closeCash(i);
+                return;
             }
 
         }
@@ -123,7 +125,6 @@ void Market :: addClientToQueue(Client * client){
 
 void Market :: addClientsToQueue(Client * clients, int number){
     for(int i = 0; i < number; ++i){
-        manageQueues();
         addClientToQueue(&clients[i]);
     }
 }
@@ -153,8 +154,12 @@ void Market :: processClients(){
 }
 
 void Market :: AddClient(Client * clients, int number){
-    addClientsToQueue(clients, number);
     processClients();
+    manageQueues();
+    addClientsToQueue(clients, number);
+
+
+
     for(size_t i = 0; i < cashCount; ++i){
         std :: cout << i << " size: " << cashes[i]->getSize() << " => " <<
                        (openCashes[i] ? "opened" : "closed") << std :: endl;
@@ -180,6 +185,38 @@ MarketState Market :: getMarketState() const{
             ++counter;
         }
     }
+
+    return result;
+}
+
+ClientState Market :: getClientState(int ID){
+    Client * tempClient = NULL;
+    Client * trueClient = NULL;
+    size_t queueIndex = -1;
+    size_t positionOnQueue = 0;
+
+    size_t currentCashSize = 0;
+    for(size_t i = 0; i < cashCount; ++i){
+        if(openCashes[i]){
+            currentCashSize = cashes[i]->getSize();
+
+            for(size_t j = 0; j < currentCashSize; ++j){
+                tempClient = cashes[i]->dequeue();
+                cashes[i]->enqueue(tempClient);
+
+                if(tempClient->ID == ID){
+                    trueClient= tempClient;
+                    queueIndex = i;
+                    positionOnQueue = j;
+                }
+            }
+        }
+    }
+
+    ClientState result;
+    result.CashDeskPosition = queueIndex;
+    result.QueuePosition = positionOnQueue;
+    result.client = trueClient;
 
     return result;
 }

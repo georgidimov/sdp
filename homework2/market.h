@@ -22,7 +22,7 @@ class Market{
     int openCash();
     void closeCash(size_t index);
 
-    int IDs; //FIXME
+    int IDs;
 
     void addClientsToQueue(Client * clients, int clientsCount);
     void addClientToQueue(Client * clients);
