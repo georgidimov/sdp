@@ -16,3 +16,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp
+
+HEADERS += \
+    Sorter.h \
+    SortTester.h \
+    InsertionSort.h
