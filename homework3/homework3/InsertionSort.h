@@ -4,8 +4,6 @@
 
 template <class T>
 class InsertionSort : public Sorter<T>{
-private:
-    void swap(T & a, T & b) const;
 public:
     InsertionSort();
 
@@ -33,14 +31,6 @@ void InsertionSort<T> :: sort(T * data, size_t count){
 
         data[tempPosition] = tempValue;
     }
-}
-
-
-template <class T>
-void InsertionSort<T> :: swap(T & a, T & b) const{
-    T temp = a;
-    a = b;
-    b = temp;
 }
 
 template <class T>
