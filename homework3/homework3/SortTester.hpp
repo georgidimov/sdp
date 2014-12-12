@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <Sorter.h>
+#include <Sorter.hpp>
 
 template<typename T>
 class SortTester {
