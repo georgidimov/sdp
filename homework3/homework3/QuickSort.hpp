@@ -28,6 +28,12 @@ void QuickSort<T> :: swap(T & a, T & b){
 
 template <class T>
 void QuickSort<T> :: sort(T * data, size_t size){
+    for(size_t i = 0; i < size; ++i){
+        std :: cout << data[i] << ' ';
+    }
+    std :: cout << std :: endl;
+
+
     if(size <= 1){
         return;
     }
@@ -65,6 +71,10 @@ void QuickSort<T> :: sort(T * data, size_t size){
     while(first < last){
         if(data[last] < median){
             while(data[first] < median){
+                if(first == last){
+                    break;
+                }
+
                 ++first;
             }
 
