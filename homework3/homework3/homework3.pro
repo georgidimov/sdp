@@ -20,4 +20,5 @@ SOURCES += main.cpp
 HEADERS += \
     SortTester.hpp \
     Sorter.hpp \
-    InsertionSort.hpp
+    InsertionSort.hpp \
+    QuickSort.hpp
