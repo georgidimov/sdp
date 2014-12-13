@@ -4,6 +4,7 @@
 
 template <class T>
 class HeapSort : public Sorter<T>{
+    void siftDown(T * array, size_T startPosition, size_t endPosition) const;
 public:
     HeapSort();
 
@@ -17,8 +18,14 @@ HeapSort<T> :: HeapSort(){
 }
 
 template <class T>
-void HeapSort<T> :: sort(T * data, size_t count){
+void HeapSort<T> :: siftDown(T * array, size_T startPosition, size_t endPosition) const{
     ;
+}
+
+
+template <class T>
+void HeapSort<T> :: sort(T * data, size_t count){
+
 }
 
 template <class T>
