@@ -5,7 +5,6 @@
 template <class T>
 class MergeSort : public Sorter<T>{
     T * result;
-    size_t resultCounter;
 
     void swap(T & a, T & b) const;
     void merge(T * a, size_t aSize, T * b, size_t bSize);
@@ -22,7 +21,6 @@ public:
 template <class T>
 MergeSort<T> :: MergeSort(){
     result = NULL;
-    resultCounter = 0;
 }
 
 template <class T>
@@ -42,6 +40,7 @@ template <class T>
 void MergeSort<T> :: merge(T * a, size_t aSize, T * b, size_t bSize){
     size_t aCounter = 0;
     size_t bCounter = 0;
+    size_t resultCounter = 0;
 
     while(aCounter < aSize && bCounter < bSize) {
         if(a[aCounter] <= b[bCounter]){
@@ -72,23 +71,16 @@ void MergeSort<T> :: merge(T * a, size_t aSize, T * b, size_t bSize){
     for(size_t i = 0; i < resultCounter; ++i){
         a[i] = result[i];
     }
-
-    resultCounter = 0;
 }
 
 template <class T>
 void MergeSort<T> :: sort(T * array, size_t size){
-    for(size_t i = 0; i < size; ++i){
-       // std :: cout << array[i] << ' ';
-    }
-    std :: cout << std :: endl;
     if(result == NULL){
         result = new int[size];
 
     }
 
     if(size == 1){
-        //merge(array, 1, NULL, 0);
         return;
     }
 
@@ -96,7 +88,6 @@ void MergeSort<T> :: sort(T * array, size_t size){
         if(array[0] > array[1]){
             swap(array[0], array[1]);
         }
-        //merge(array, 1, array + 1, 1);
         return;
     }
 
