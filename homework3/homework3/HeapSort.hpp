@@ -9,7 +9,7 @@ class HeapSort : public Sorter<T>{
 public:
     HeapSort();
 
-    virtual void sort(T * data, size_t count);
+    virtual void sort(T * array, size_t size);
     virtual unsigned long long getSortTime() const;
 };
 
@@ -57,8 +57,23 @@ void HeapSort<T> :: siftDown(T * array, size_t startPosition, size_t size) const
 
 
 template <class T>
-void HeapSort<T> :: sort(T * data, size_t count){
+void HeapSort<T> :: sort(T * array, size_t size){
+    size_t currentPosition = size / 2;
 
+    while(currentPosition > 0){
+        --currentPosition;
+
+        siftDown(array, currentPosition, size);
+    }
+
+    currentPosition = size;
+
+    while(currentPosition > 0){
+        --currentPosition;
+
+        swap(array[0], array[currentPosition]);
+        siftDown(array, 0, currentPosition);
+    }
 }
 
 template <class T>
