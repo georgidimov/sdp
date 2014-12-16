@@ -4,12 +4,13 @@
 
 template <class T>
 class HeapSort : public ExtendedSorter<T>{
-    void swap(T & a, T & b) const;
-    void siftDown(T * array, size_t startPosition, size_t size) const;
+    void siftDown(T * data, size_t startPosition, size_t size) const;
+    virtual void applySorting(T * data, size_t size);
 public:
     HeapSort();
+    ~HeapSort();
 
-    virtual void sort(T * array, size_t size);
+    virtual void sort(T * data, size_t size);
     virtual unsigned long long getSortTime() const;
 };
 
@@ -19,32 +20,29 @@ HeapSort<T> :: HeapSort(){
 }
 
 template <class T>
-void HeapSort<T> :: swap(T & a, T & b) const{
-    T temp = a;
-    a = temp;
-    a = b;
-    b = temp;
+HeapSort<T> :: ~HeapSort(){
+    ;
 }
 
 template <class T>
-void HeapSort<T> :: siftDown(T * array, size_t startPosition, size_t size) const{
-    T valueAtTheBeginning = array[startPosition];
+void HeapSort<T> :: siftDown(T * data, size_t startPosition, size_t size) const{
+    T valueAtTheBeginning = data[startPosition];
 
     size_t childPosition = startPosition * 2 + 1;
 
     while(childPosition < size){
         //check rigth child if is with greater value get this position
-        if(array[childPosition] < array[childPosition + 1] && childPosition + 1 < size){
+        if(data[childPosition] < data[childPosition + 1] && childPosition + 1 < size){
             ++childPosition;
         }
 
         //check if the tree is ordered
-        if(valueAtTheBeginning > array[childPosition]){
+        if(valueAtTheBeginning > data[childPosition]){
             return;
         }
 
-        if(array[startPosition] < array[childPosition]){
-            swap(array[startPosition], array[childPosition]);
+        if(data[startPosition] < data[childPosition]){
+            ExtendedSorter<T> :: swap(data[startPosition], data[childPosition]);
         }
 
         //jump to next node
@@ -55,15 +53,14 @@ void HeapSort<T> :: siftDown(T * array, size_t startPosition, size_t size) const
     }
 }
 
-
 template <class T>
-void HeapSort<T> :: sort(T * array, size_t size){
+void HeapSort<T> :: applySorting(T * data, size_t size){
     size_t currentPosition = size / 2;
 
     while(currentPosition > 0){
         --currentPosition;
 
-        siftDown(array, currentPosition, size);
+        siftDown(data, currentPosition, size);
     }
 
     currentPosition = size;
@@ -71,12 +68,17 @@ void HeapSort<T> :: sort(T * array, size_t size){
     while(currentPosition > 0){
         --currentPosition;
 
-        swap(array[0], array[currentPosition]);
-        siftDown(array, 0, currentPosition);
+        ExtendedSorter<T> :: swap(data[0], data[currentPosition]);
+        siftDown(data, 0, currentPosition);
     }
 }
 
 template <class T>
+void HeapSort<T> :: sort(T * data, size_t size){
+    ExtendedSorter<T> :: sort(data, size);
+}
+
+template <class T>
 unsigned long long HeapSort<T> :: getSortTime() const{
-    return 0;
+    return ExtendedSorter<T> :: getSortTime();
 }

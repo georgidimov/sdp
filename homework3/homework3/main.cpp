@@ -1,47 +1,36 @@
 #include <iostream>
 #include <QCoreApplication>
-#include <SortTester.hpp>
+#include <ExtendedSortTester.hpp>
 #include <InsertionSort.hpp>
 #include <QuickSort.hpp>
 #include <HeapSort.hpp>
 #include <MergeSort.hpp>
+#include <ShakerSort.hpp>
 
 int main(){
+    size_t sortersCount = 5;
+    Sorter<int> ** sorters = new Sorter<int> * [sortersCount];
+    sorters[0] = new QuickSort<int>;
+    sorters[1] = new HeapSort<int>;
+    sorters[2] = new InsertionSort<int>;
+    sorters[3] = new MergeSort<int>;
+    sorters[4] = new ShakerSort<int>;
 
-    //SortTester<int> sorter;
-    //int array[8] = {5, 5, 3, 1, 4, 7, 3, 11};
-    //size_t size = 7;
-    //int array[8] = {1, 1, 1, 1, 1, 1, 1, 11};
-    //size_t size = 7;
-    //int array[8] = {1, 4, 1, 5, 3, 8, 7, 2};
-    //int array[8] = {4, 3, 1, 3, 7, 5, 11, 2};
-    //int array[8] = {2, 9, 1, 2, 7, 0 ,9,  3};
-    //size_t size = 8;
-    QuickSort<int> q;
-    size_t size = 10000000;
-    int * array = new int[size];
+    ExtendedSortTester<int> tester(sorters, sortersCount);
 
-    for(size_t i = 0; i < size; ++i){
-        array[i] = rand() % 10;
-        //std :: cout << array[i] << ' ';
+    tester.getSummary(std :: cout);
+
+    for(size_t i = 0; i < sortersCount; ++i){
+       delete sorters[i];
     }
 
-    q.sort(array, size);
+    delete [] sorters;
+
+    //ShakerSort<int> s;
 
 
 
-    int temp = array[0];
-    for(size_t i = 0; i < size; ++i){
-        if(temp > array[i]){
-            std :: cout << "something went wrong";
-            break;
-        }
 
-        //std :: cout << array[i] << ' ';
-       temp = array[i];
-    }
-
-    std :: cout << q.getSortTime();
 
     return 0;
 }

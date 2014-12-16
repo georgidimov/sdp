@@ -4,10 +4,8 @@
 
 template <class T>
 class MergeSort : public ExtendedSorter<T>{
-    time_t lastTimeSort;
-
-    void swap(T & a, T & b) const;
     void merge(T * a, size_t aSize, T * b, size_t bSize, T * buffer);
+    void applySorting(T * data, size_t size);
 public:
     MergeSort();
     ~MergeSort();
@@ -20,7 +18,7 @@ public:
 
 template <class T>
 MergeSort<T> :: MergeSort(){
-    lastTimeSort = 0;
+    ;
 }
 
 template <class T>
@@ -28,13 +26,6 @@ MergeSort<T> :: ~MergeSort(){
     ;
 }
 
-template <class T>
-void MergeSort<T> :: swap(T & a, T & b) const{
-    T temp = a;
-    a = temp;
-    a = b;
-    b = temp;
-}
 
 template <class T>
 void MergeSort<T> :: sortIteration(T * array, T * buffer, size_t size){
@@ -44,7 +35,7 @@ void MergeSort<T> :: sortIteration(T * array, T * buffer, size_t size){
 
     if(size == 2){
         if(array[0] > array[1]){
-            swap(array[0], array[1]);
+            ExtendedSorter<T> :: swap(array[0], array[1]);
         }
 
         return;
@@ -93,26 +84,21 @@ void MergeSort<T> :: merge(T * a, size_t aSize, T * b, size_t bSize, T * buffer)
 }
 
 template <class T>
-void MergeSort<T> :: sort(T * array, size_t size){
-    time(&lastTimeSort);
-
+void MergeSort<T> :: applySorting(T * data, size_t size){
     T * buffer = new T[size];
 
-    sortIteration(array, buffer, size);
+    sortIteration(data, buffer, size);
 
     delete [] buffer;
+}
 
-    time_t timeAfterSort;
-    time(&timeAfterSort);
-
-    lastTimeSort = timeAfterSort - lastTimeSort ;
-
+template <class T>
+void MergeSort<T> :: sort(T * array, size_t size){
+    ExtendedSorter<T> :: sort(array, size);
 }
 
 template <class T>
 unsigned long long MergeSort<T> :: getSortTime() const{
-    //return Sorter<T> :: getSortTime();
-    std :: cout << std :: endl << lastTimeSort << std :: endl;
-    return lastTimeSort;
+    return ExtendedSorter<T> :: getSortTime();
 }
 

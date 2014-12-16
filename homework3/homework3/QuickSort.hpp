@@ -9,6 +9,7 @@ private:
     virtual void applySorting(T * data, size_t size);
 public:
     QuickSort();
+    ~QuickSort();
 
     virtual void sort(T * data, size_t size);
     virtual unsigned long long getSortTime() const;
@@ -16,6 +17,11 @@ public:
 
 template <class T>
 QuickSort<T> :: QuickSort(){
+    ;
+}
+
+template <class T>
+QuickSort<T> :: ~QuickSort(){
     ;
 }
 
@@ -93,18 +99,10 @@ void QuickSort<T> :: applySorting(T *data, size_t size){
 
 template <class T>
 void QuickSort<T> :: sort(T * data, size_t size){
-    time_t timeBeforeSorting;
-    time(&timeBeforeSorting);
-
-    applySorting(data, size);
-
-    time_t timeAfterSorting;
-    time(&timeAfterSorting);
-
-    ExtendedSorter<T> :: sortingTime = timeAfterSorting - timeBeforeSorting;
+    ExtendedSorter<T> :: sort(data, size);
 }
 
 template <class T>
 unsigned long long QuickSort<T> :: getSortTime() const{
-   return ExtendedSorter<T> :: sortingTime;
+   return ExtendedSorter<T> :: getSortTime();
 }

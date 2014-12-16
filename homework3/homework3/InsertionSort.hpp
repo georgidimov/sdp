@@ -3,8 +3,10 @@
 
 template <class T>
 class InsertionSort : public ExtendedSorter<T>{
+    virtual void applySorting(T * data, size_t size);
 public:
     InsertionSort();
+    ~InsertionSort();
 
     virtual void sort(T * data, size_t count);
     virtual unsigned long long getSortTime() const;
@@ -16,11 +18,22 @@ InsertionSort<T> :: InsertionSort(){
 }
 
 template <class T>
+InsertionSort<T> :: ~InsertionSort(){
+    ;
+}
+
+
+template <class T>
 void InsertionSort<T> :: sort(T * data, size_t count){
+    ExtendedSorter<T> :: sort(data, count);
+}
+
+template <class T>
+void InsertionSort<T> :: applySorting(T * data, size_t size){
     T tempValue;
     size_t tempPosition;
 
-    for(size_t i = 1; i < count; ++i){
+    for(size_t i = 1; i < size; ++i){
         tempValue = data[i];
         tempPosition = i;
 
@@ -35,5 +48,5 @@ void InsertionSort<T> :: sort(T * data, size_t count){
 
 template <class T>
 unsigned long long InsertionSort<T> :: getSortTime() const{
-    return 0;
+    return ExtendedSorter<T> :: getSortTime();
 }
