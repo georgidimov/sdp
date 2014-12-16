@@ -5,10 +5,13 @@ template <class T>
 class QuickSort : public Sorter<T>{
 private:
     void swap(T & a, T & b);
+    size_t PartitionElement(T * data, size_t size);
+
+    void applySorting(T * data, size_t size);
 public:
     QuickSort();
 
-    virtual void sort(T *data, size_t size);
+    virtual void sort(T * data, size_t size);
     virtual unsigned long long getSortTime() const;
 };
 
@@ -26,15 +29,20 @@ void QuickSort<T> :: swap(T & a, T & b){
 }
 
 template <class T>
-void QuickSort<T> :: sort(T * data, size_t size){
-    for(size_t i = 0; i < size; ++i){
-        std :: cout << data[i] << ' ';
+void QuickSort<T> :: swapif(T & a, T & b)
+{
+    if( b < a )
+    {
+        T temp(a);
+        a = b;
+        b = temp;
     }
-    std :: cout << std :: endl;
+}
 
-
+template <class T>
+size_t QuickSort<T> :: PartitionElement(T * data, size_t size){
     if(size <= 1){
-        return;
+        return 0 ;
     }
 
     if(size == 2){
@@ -42,7 +50,7 @@ void QuickSort<T> :: sort(T * data, size_t size){
             swap(data[0], data[1]);
         }
 
-        return;
+        return 0;
     }
 
     //define median
@@ -62,49 +70,53 @@ void QuickSort<T> :: sort(T * data, size_t size){
         swap(data[first], data[medianIndex]);
     }
 
-    T median = data[medianIndex];
-
     --last;
-    ++first;
+    swap(data[medianIndex], data[last]);
 
-    while(first < last){
-        if(data[last] < median){
-            while(data[first] < median){
-                if(first == last){
-                    break;
-                }
+    T middle = data[last];
 
-                ++first;
-            }
+    while(true)
+    {
 
-            if(first != last){
-                if(data[first] == median){
-                    medianIndex = last;
-                }else if(data[last] == median){
-                    medianIndex = first;
-                }
+        while(data[++first] < middle)
+            ;
 
-                swap(data[first], data[last]);
-                ++first;
-            }
+        while(data[--last] > middle)
+        {
+            if(first == last)
+                break;
         }
 
-        --last;
+        if(first >= last)
+            break;
+       swap(data[first], data[last]);
 
-        if(first == last && first < medianIndex && data[first] > median){
-            swap(data[first], data[medianIndex]);
-            medianIndex = first;
-        }else if(first == last && first > medianIndex && data[first] < median){
-            swap(data[first], data[medianIndex]);
-            medianIndex = first;
-        }
+
     }
+
+    swap(data[first], middle);
+
+    return first;
+}
+
+template <class T>
+void QuickSort<T> :: applySorting(T *data, size_t size){
+    if(size < 2){
+        return;
+    }
+
+    size_t medianIndex = PartitionElement(data, size);
 
     sort(data, medianIndex);
     sort(data + medianIndex + 1, size - medianIndex - 1);
 }
 
 template <class T>
+void QuickSort<T> :: sort(T * data, size_t size){
+
+}
+
+template <class T>
 unsigned long long QuickSort<T> :: getSortTime() const{
-   return 0;
+   return Sorter<T> :: sortingTime;
 }

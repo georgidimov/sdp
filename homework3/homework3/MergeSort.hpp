@@ -4,6 +4,8 @@
 
 template <class T>
 class MergeSort : public Sorter<T>{
+    time_t lastTimeSort;
+
     void swap(T & a, T & b) const;
     void merge(T * a, size_t aSize, T * b, size_t bSize, T * buffer);
 public:
@@ -18,7 +20,7 @@ public:
 
 template <class T>
 MergeSort<T> :: MergeSort(){
-    ;
+    lastTimeSort = 0;
 }
 
 template <class T>
@@ -44,6 +46,7 @@ void MergeSort<T> :: sortIteration(T * array, T * buffer, size_t size){
         if(array[0] > array[1]){
             swap(array[0], array[1]);
         }
+
         return;
     }
 
@@ -91,15 +94,25 @@ void MergeSort<T> :: merge(T * a, size_t aSize, T * b, size_t bSize, T * buffer)
 
 template <class T>
 void MergeSort<T> :: sort(T * array, size_t size){
+    time(&lastTimeSort);
+
     T * buffer = new T[size];
 
     sortIteration(array, buffer, size);
 
     delete [] buffer;
+
+    time_t timeAfterSort;
+    time(&timeAfterSort);
+
+    lastTimeSort = timeAfterSort - lastTimeSort ;
+
 }
 
 template <class T>
 unsigned long long MergeSort<T> :: getSortTime() const{
-    return 0;
+    //return Sorter<T> :: getSortTime();
+    std :: cout << std :: endl << lastTimeSort << std :: endl;
+    return lastTimeSort;
 }
 
