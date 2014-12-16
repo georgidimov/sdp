@@ -1,9 +1,9 @@
 #pragma once
-#include <Sorter.hpp>
+#include <ExtendedSorter.hpp>
 
 
 template <class T>
-class MergeSort : public Sorter<T>{
+class MergeSort : public ExtendedSorter<T>{
     time_t lastTimeSort;
 
     void swap(T & a, T & b) const;

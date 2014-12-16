@@ -1,8 +1,8 @@
 #pragma once
-#include <Sorter.hpp>
+#include <ExtendedSorter.hpp>
 
 template <class T>
-class InsertionSort : public Sorter<T>{
+class InsertionSort : public ExtendedSorter<T>{
 public:
     InsertionSort();
 

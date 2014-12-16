@@ -1,9 +1,9 @@
 #pragma once
-#include <Sorter.hpp>
+#include <ExtendedSorter.hpp>
 
 
 template <class T>
-class HeapSort : public Sorter<T>{
+class HeapSort : public ExtendedSorter<T>{
     void swap(T & a, T & b) const;
     void siftDown(T * array, size_t startPosition, size_t size) const;
 public:

@@ -23,4 +23,5 @@ HEADERS += \
     InsertionSort.hpp \
     QuickSort.hpp \
     HeapSort.hpp \
-    MergeSort.hpp
+    MergeSort.hpp \
+    ExtendedSorter.hpp
