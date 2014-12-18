@@ -39,6 +39,16 @@ void Value :: clear(){
     value = NULL;
 }
 
+bool Value :: operator ==(const Value & v) const{
+    return !strcmp(value, v.value);
+}
+
+std :: ostream & operator <<(std :: ostream & out, const Value & v){
+    out << v.value;
+
+    return out;
+}
+
 char * Value :: getValue() const{
     return value;
 }

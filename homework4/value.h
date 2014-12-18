@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string.h>
 
-class Value{
+class Value{    ///Fix class name
     char * value;
     void clear();
 public:
@@ -11,6 +11,9 @@ public:
     Value(const Value & o);
     Value & operator=(const Value & o);
     ~Value();
+
+    bool operator == (const Value & v) const;
+    friend std :: ostream & operator << (std :: ostream & out, const Value & v);
 
 
     char * getValue() const;
