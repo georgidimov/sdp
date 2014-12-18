@@ -1,12 +1,12 @@
 #pragma once
 #include <string.h>
 
-class Tag{
+class Attribute{
     char * key;
     char * value;
 public:
-    Tag(char * k, char * v);
-    ~Tag();
+    Attribute(char * k, char * v);
+    ~Attribute();
 
     void getKey(char * & returnedKey) const;
     void getValue(char * & returnedValued) const;

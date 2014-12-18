@@ -16,7 +16,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    tag.cpp
+    attribute.cpp
 
 HEADERS += \
-    tag.h
+    attribute.h

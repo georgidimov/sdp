@@ -1,6 +1,6 @@
-#include "tag.h"
+#include <attribute.h>
 
-Tag :: Tag(char * k, char * v){
+Attribute :: Attribute(char * k, char * v){
     //copy key and value
     key = new char[strlen(k) + 1];
     strcpy(key, k);
@@ -9,7 +9,7 @@ Tag :: Tag(char * k, char * v){
     strcpy(value, v);
 }
 
-Tag :: ~Tag(){
+Attribute :: ~Attribute(){
     delete [] key;
     key = NULL;
 
@@ -17,12 +17,12 @@ Tag :: ~Tag(){
     value = NULL;
 }
 
-void Tag :: getKey(char * & returnedKey) const{
+void Attribute :: getKey(char * & returnedKey) const{
     returnedKey = new char [strlen(key) + 1];
     strcpy(returnedKey, key);
 }
 
-void Tag :: getValue(char * & returnedValued) const{
+void Attribute :: getValue(char * & returnedValued) const{
     returnedValued = new char [strlen(value) + 1];
     strcpy(returnedValued, value);
 }
