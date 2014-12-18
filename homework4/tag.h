@@ -14,4 +14,8 @@ class Tag{
 public:
     Tag(Tag * passedParent, char * passedValue);
     ~Tag();
+
+    Tag * getParent() const;
+
+    void getValue(char * returnedValue) const;
 };
