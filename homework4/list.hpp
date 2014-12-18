@@ -21,7 +21,7 @@ public:
     T & operator [](size_t index);
 
     void addAt(size_t index, T newElement);
-
+    void add(T newElement);
 
     T removeAt(size_t index);
     const T & getAt(size_t index) const;
@@ -131,6 +131,11 @@ void List<T> :: addAt(size_t index, T newElement){
     }
 
     ++size;
+}
+
+template<class T>
+void List<T> :: add(T newElement){
+    addAt(size, newElement);
 }
 
 template <class T>
