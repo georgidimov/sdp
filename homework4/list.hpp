@@ -9,7 +9,7 @@ class List{
 
     size_t size;
 
-    Node<T> * getNodeAt(int index);
+    Node<T> * getNodeAt(size_t index);
 public:
     List();
     List(const List & o);
@@ -17,14 +17,14 @@ public:
     ~List();
 
     List & operator = (const List & o);
-    const T & operator [](int index) const;
-    T & operator [](int index);
+    const T & operator [](size_t index) const;
+    T & operator [](size_t index);
 
-    void addAt(int index, T newElement);
+    void addAt(size_t index, T newElement);
 
-public:
-    T removeAt(int index);
-    const T & getAt(int index) const;
+
+    T removeAt(size_t index);
+    const T & getAt(size_t index) const;
 
 
 
@@ -99,17 +99,17 @@ List<T> & List<T> :: operator = (const List<T> & o){
 }
 
 template <class T>
-const T & List<T> :: operator [](int index) const{
+const T & List<T> :: operator [](size_t index) const{
     return getAt(index);
 }
 
 template <class T>
-T & List<T> :: operator [](int index){
+T & List<T> :: operator [](size_t index){
     return const_cast<T &>(getAt(index));
 }
 
 template <class T>
-void List<T> :: addAt(int index, T newElement){
+void List<T> :: addAt(size_t index, T newElement){
     if(index < 0 || index > size + 1){
         throw "invalid index";
     }
@@ -134,7 +134,7 @@ void List<T> :: addAt(int index, T newElement){
 }
 
 template <class T>
-T List<T> :: removeAt(int index){
+T List<T> :: removeAt(size_t index){
     if(index < 0 || index > size){
         throw "invalid index";
     }
@@ -151,7 +151,7 @@ T List<T> :: removeAt(int index){
     }else{
         Node<T> * beforeNode = first;
 
-        for(int i = 0; i < index - 1; ++i){
+        for(size_t i = 0; i < index - 1; ++i){
             beforeNode = beforeNode->getNext();
         }
 
@@ -171,7 +171,7 @@ T List<T> :: removeAt(int index){
 }
 
 template <class T>
-const T & List<T> :: getAt(int index) const{
+const T & List<T> :: getAt(size_t index) const{
     if (index < 0 || index > size){
         throw "invalid index";
     }
@@ -181,7 +181,7 @@ const T & List<T> :: getAt(int index) const{
     }else{
         Node<T> * node = first;
 
-        for(int i = 0; i < index; ++i){
+        for(size_t i = 0; i < index; ++i){
             node = node->getNext();
         }
 
@@ -190,7 +190,7 @@ const T & List<T> :: getAt(int index) const{
 }
 
 template <class T>
-Node<T> * List<T>::getNodeAt(int index){
+Node<T> * List<T>::getNodeAt(size_t index){
     if (index < 0 || index > size){
         throw "invalid index";
     }
@@ -200,7 +200,7 @@ Node<T> * List<T>::getNodeAt(int index){
     }else{
         Node<T> * node = first;
 
-        for(int i = 0; i < index; ++i){
+        for(size_t i = 0; i < index; ++i){
             node = node->getNext();
         }
 
