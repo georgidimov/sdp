@@ -16,7 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    attribute.cpp
+    attribute.cpp \
+    tag.cpp
 
 HEADERS += \
-    attribute.h
+    attribute.h \
+    tag.h \
+    node.hpp \
+    list.hpp
