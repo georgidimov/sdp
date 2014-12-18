@@ -1,14 +1,14 @@
 #pragma once
-#include <string.h>
+#include <value.h>
 
 class Attribute{
-    char * key;
-    char * value;
+    Value key;
+    Value value;
 public:
-    Attribute(char * k, char * v);
+    Attribute(Value k, Value v);
     ~Attribute();
 
-    void getKey(char * & returnedKey) const;
-    void getValue(char * & returnedValued) const;
+    Value getKey() const;
+    Value getValue() const;
 };
 
