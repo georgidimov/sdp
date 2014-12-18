@@ -17,10 +17,12 @@ Tag :: ~Tag(){
     value = NULL;
 }
 
-const char * Tag :: getKey() const{
-    return key;
+void Tag :: getKey(char * & returnedKey) const{
+    returnedKey = new char [strlen(key) + 1];
+    strcpy(returnedKey, key);
 }
 
-const char * Tag :: getValue() const{
-    return value;
+void Tag :: getValue(char * & returnedValued) const{
+    returnedValued = new char [strlen(value) + 1];
+    strcpy(returnedValued, value);
 }

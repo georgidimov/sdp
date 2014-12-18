@@ -8,8 +8,7 @@ public:
     Tag(char * k, char * v);
     ~Tag();
 
-    ///FIXME
-    const char * getKey() const;
-    const char * getValue() const;
+    void getKey(char * & returnedKey) const;
+    void getValue(char * & returnedValued) const;
 };
 
