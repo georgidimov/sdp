@@ -8,14 +8,15 @@ class Tag{
 
     List<Attribute> attrs;
 
-    char * value;
+    Value value;
 
     void clear();
 public:
-    Tag(Tag * passedParent, char * passedValue);
+    Tag(Tag * passedParent, Value passedValue);
     ~Tag();
 
     Tag * getParent() const;
+    Value getValue() const;
 
-    void getValue(char * returnedValue) const;
+    void addChild(Tag * child);
 };
