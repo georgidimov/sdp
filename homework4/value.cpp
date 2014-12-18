@@ -1,5 +1,9 @@
 #include "value.h"
 
+Value :: Value(){
+    value = NULL;
+}
+
 Value :: Value(char * passedValue){
     value = new char[strlen(passedValue) + 1];
     strcpy(value, passedValue);

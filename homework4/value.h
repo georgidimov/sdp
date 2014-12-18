@@ -6,6 +6,7 @@ class Value{
     char * value;
     void clear();
 public:
+    Value();
     Value(char * passedValue);
     Value(const Value & o);
     Value & operator=(const Value & o);
