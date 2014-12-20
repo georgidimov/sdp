@@ -25,7 +25,6 @@ template <class T>
 Node<T> :: Node(T newValue, Node * newNext){
     value = newValue;
     next = newNext;
-
 }
 
 template <class T>
