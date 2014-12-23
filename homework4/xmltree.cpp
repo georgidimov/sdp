@@ -1,5 +1,5 @@
 #include "xmltree.h"
 
-XMLtree::XMLtree()
-{
+XMLtree :: XMLtree(){
+    root = NULL;
 }
