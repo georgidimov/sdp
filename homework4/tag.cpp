@@ -47,3 +47,11 @@ void Tag :: changeAttribute(Value key, Value newValue){
 
     attrs[index].setValue(newValue);
 }
+
+void Tag :: removeAttribute(Value key){
+    for(size_t i = 0; i < attrs.getSize(); ++i){
+        if(attrs[i].getKey() == key){
+            attrs.removeAt(i);
+        }
+    }
+}

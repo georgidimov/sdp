@@ -25,4 +25,16 @@ public:
 
     void addAttribute(Value k, Value v);
     void changeAttribute(Value key, Value newValue);
+    void removeAttribute(Value key);
+
+    ///REMOVE ME
+    void printAttrs() const{
+        size_t size = attrs.getSize();
+
+        for(size_t i = 0; i < size; ++i){
+            std :: cout << attrs[i].getValue() << ' ';
+        }
+
+        std :: cout << std :: endl;
+    }
 };
