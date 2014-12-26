@@ -9,12 +9,13 @@ class Tag{
 
     List<Attribute> attrs;
 
+    Value key;
     Value value;
 
     void clear();
     size_t findAttrIndex(Value key) const;
 public:
-    Tag(Tag * passedParent, Value passedValue);
+    Tag(Tag * passedParent, Value passedKey, Value passedValue);
     ~Tag();
 
     Tag * getParent() const;

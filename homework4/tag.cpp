@@ -1,8 +1,9 @@
 #include "tag.h"
 
-Tag :: Tag(Tag * passedParent, Value passedValue){
+Tag :: Tag(Tag * passedParent, Value passedKey, Value passedValue){
     parent = passedParent;
 
+    key = passedKey;
     value = passedValue;
 }
 
@@ -33,6 +34,10 @@ size_t Tag :: findAttrIndex(Value key) const{
 
 Tag * Tag :: getParent() const{
     return parent;
+}
+
+Value Tag :: getKey() const{
+    return key;
 }
 
 Value Tag :: getValue() const{
