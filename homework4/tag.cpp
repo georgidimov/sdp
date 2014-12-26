@@ -11,7 +11,12 @@ Tag :: ~Tag(){
 }
 
 void Tag :: clear(){
-    ;
+    size_t size = childs.getSize();
+
+    for(size_t i = 0; i < size; ++i){
+        delete childs[i];
+        childs[i] = NULL;
+    }
 }
 
 size_t Tag :: findAttrIndex(Value key) const{
@@ -35,7 +40,7 @@ Value Tag :: getValue() const{
 }
 
 void Tag :: addChild(Tag * child){
-    children.add(child);
+    childs.add(child);
 }
 
 void Tag :: addAttribute(Value k, Value v){

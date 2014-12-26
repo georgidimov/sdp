@@ -5,7 +5,7 @@
 ///Check clear method
 class Tag{
     Tag * parent;
-    List<Tag *> children;
+    List<Tag *> childs;
 
     List<Attribute> attrs;
 
