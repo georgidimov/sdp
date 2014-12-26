@@ -17,10 +17,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     attribute.cpp \
-    tag.cpp
+    tag.cpp \
+    value.cpp \
+    xmltree.cpp
 
 HEADERS += \
     attribute.h \
     tag.h \
     node.hpp \
-    list.hpp
+    list.hpp \
+    value.h \
+    xmltree.h
