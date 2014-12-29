@@ -27,4 +27,5 @@ HEADERS += \
     node.hpp \
     list.hpp \
     value.h \
-    xmltree.h
+    xmltree.h \
+    queue.hpp
