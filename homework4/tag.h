@@ -19,6 +19,7 @@ public:
     ~Tag();
 
     Tag * getParent() const;
+    Value getKey() const;
     Value getValue() const;
 
     void addChild(Tag * child);
