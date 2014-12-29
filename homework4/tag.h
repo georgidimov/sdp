@@ -23,6 +23,7 @@ public:
     Value getValue() const;
 
     void addChild(Tag * child);
+    const List<Tag *> & getChilds() const;
 
 
     void addAttribute(Value k, Value v);

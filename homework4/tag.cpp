@@ -48,6 +48,10 @@ void Tag :: addChild(Tag * child){
     childs.add(child);
 }
 
+const List<Tag *> & Tag :: getChilds() const{
+    return childs;
+}
+
 void Tag :: addAttribute(Value k, Value v){
     attrs.add(Attribute(k, v));
 }
