@@ -8,7 +8,7 @@ class XMLtree{
 //protected:
 public:
     class Iterator{
-        //Tag * current;
+        Tag * current;
         Queue<Tag *> tagsQueue;
     public:
         Iterator(Tag * k);
