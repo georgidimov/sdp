@@ -16,6 +16,7 @@ public:
 
     void enqueue(T newElement);
     void enqueue(const Queue<T> & q);
+    void enqueue(const List<T> & l);
     T dequeue();
     const T & peek() const;
 
@@ -80,6 +81,15 @@ void Queue<T> :: enqueue(const Queue<T> & q){
 
     for(size_t i = 0; i < size; ++i){
         enqueue(q.getAt(i));
+    }
+}
+
+template <class T>
+void Queue<T> :: enqueue(const List<T> & l){
+    size_t size = l.getSize();
+
+    for(size_t i = 0; i < size; ++i){
+        enqueue(l.getAt(i));
     }
 }
 
