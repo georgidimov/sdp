@@ -1,7 +1,7 @@
 #include "xmltree.h"
 
 XMLtree :: XMLtree(){
-    root = new Tag(NULL, Value((char *) "root"), Value((char *) ""));
+    //root = new Tag(NULL, Value((char *) "root"), Value((char *) ""));
 }
 
 XMLtree :: ~XMLtree(){
@@ -9,7 +9,7 @@ XMLtree :: ~XMLtree(){
 }
 
 void XMLtree :: clear(){
-    ;
+    //delete root;
 }
 
 void XMLtree :: addTag(Value parent, Value k, Value v){
@@ -17,16 +17,9 @@ void XMLtree :: addTag(Value parent, Value k, Value v){
 }
 
 ///Iterator`s part
-XMLtree :: Iterator :: Iterator(){
-    current = NULL;
-}
-
 XMLtree :: Iterator :: Iterator(Tag * k){
-    current = k;
-}
-
-XMLtree :: Iterator :: Iterator(Value k){
-    //write me
+    tagsQueue.enqueue(k);
+    tagsQueue.enqueue(k->getChilds());
 }
 
 const XMLtree :: Iterator &  XMLtree :: begin(){
@@ -46,9 +39,9 @@ const XMLtree :: Iterator & XMLtree :: Iterator :: operator--(){
 }
 
 bool XMLtree :: Iterator :: operator ==(const XMLtree :: Iterator & rh) const{
-    return current == rh.current;
+    //return current == rh.current;
 }
 
 XMLtree :: Iterator :: operator bool() const{
-    return current == NULL;
+    //return current == NULL;
 }

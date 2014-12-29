@@ -1,5 +1,6 @@
 #pragma once
 #include <tag.h>
+#include <queue.hpp>
 
 class XMLtree{
     Tag * root;
@@ -7,11 +8,10 @@ class XMLtree{
 //protected:
 public:
     class Iterator{
-        Tag * current;
+        //Tag * current;
+        Queue<Tag *> tagsQueue;
     public:
-        Iterator();
         Iterator(Tag * k);
-        Iterator(Value k);
 
         const Iterator & operator++();
 
