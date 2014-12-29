@@ -4,12 +4,13 @@
 
 class XMLtree{
     Tag * root;
+    Queue<Tag *> iteratorQueue;
     void clear();
 //protected:
 public:
     class Iterator{
         Tag * current;
-        Queue<Tag *> tagsQueue;
+
     public:
         Iterator(Tag * k);
 
