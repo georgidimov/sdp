@@ -15,6 +15,7 @@ public:
     void split( Queue<T> & newQueue);
 
     void enqueue(T newElement);
+    void enqueue(const Queue<T> & q);
     T dequeue();
     const T & peek() const;
 
@@ -71,6 +72,15 @@ size_t Queue<T> :: getSize() const{
 template <class T>
 void Queue<T> :: enqueue(T newElement){
     List<T> :: addAt(getSize(), newElement);
+}
+
+template <class T>
+void Queue<T> :: enqueue(const Queue<T> & q){
+    size_t size = q.getSize();
+
+    for(size_t i = 0; i < size; ++i){
+        enqueue(q.getAt(i));
+    }
 }
 
 template <class T>
