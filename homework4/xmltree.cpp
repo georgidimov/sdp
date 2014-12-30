@@ -31,7 +31,6 @@ XMLtree :: Iterator XMLtree :: end(){
 
 ///Iterator`s part
 XMLtree :: Iterator :: Iterator(Tag * current){
-    parent = current->getParent();
     tagsQueue.enqueue(current);
     tagsQueue.enqueue(current->getChilds());
 

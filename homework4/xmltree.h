@@ -16,7 +16,6 @@ public:
     ~XMLtree();
 
     class Iterator{
-        Tag * parent;
         Queue<Tag *> tagsQueue;
     public:
         Iterator(Tag * current);
