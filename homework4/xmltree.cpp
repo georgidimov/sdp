@@ -33,13 +33,43 @@ void XMLtree :: addTag(const Value & parentKey, const Value & k, const Value & v
     }
 }
 
-XMLtree :: Iterator XMLtree :: begin(){
+XMLtree :: Iterator XMLtree :: begin() const{
     return Iterator(root);
 }
 
-XMLtree :: Iterator XMLtree :: end(){
+XMLtree :: Iterator XMLtree :: end() const{
     return Iterator();
 }
+
+void XMLtree :: addTabs(std :: ostream & out, size_t level) const{
+    while(level--){
+        for(size_t i = 0; i < 4; ++i){
+            out << ' ';
+        }
+    }
+}
+
+void XMLtree :: printReadable(std :: ostream & out) const{
+    Stack<Value> endTags;
+
+    size_t level = 0;
+    for(Iterator i = begin(); i; ++i, ++level){
+        addTabs(out, level);
+        out << '<' << (*i)->getKey() << '>' << std :: endl;
+        addTabs(out, level + 1);
+        out<<(*i)->getValue() << std :: endl;
+
+        endTags.push((*i)->getKey());
+    }
+
+    while(!endTags.isEmpty()){
+        --level;
+
+        addTabs(out, level);
+        out << "</" << endTags.pop() << '>' << std :: endl;
+    }
+}
+
 
 
 
@@ -64,16 +94,22 @@ XMLtree :: Iterator :: Iterator(Tag * current){
 }
 
 XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(int uselessVar){
+    ++uselessVar;   //just for stop warning
+
     tagsQueue.dequeue();
 
     if(tagsQueue.getSize()){
         tagsQueue.enqueue(tagsQueue.peek()->getChilds());
     }
-    //tagsQueue.peek()->printChilds();
+
+
+    return * this;
 }
 
 XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(){
     (*this)++;
+
+    return * this;
 }
 
 Tag * XMLtree :: Iterator :: operator *(){
@@ -82,7 +118,7 @@ Tag * XMLtree :: Iterator :: operator *(){
 
 
 bool XMLtree :: Iterator :: operator ==(const Iterator & r) const{
-   //write me
+
 }
 
 XMLtree :: Iterator :: operator bool() const{

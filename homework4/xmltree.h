@@ -1,11 +1,14 @@
 #pragma once
 #include <tag.h>
 #include <queue.hpp>
+#include <stack.hpp>
 
 class XMLtree{
     Tag * root;
 
     void clear();
+
+    void addTabs(std :: ostream & out, size_t level) const;
 //protected:
 public:
 
@@ -35,8 +38,8 @@ public:
     void addTag(const Value & parentKey, const Value & k, const Value & v);
 
 
-    Iterator begin();
-    Iterator end();
+    Iterator begin() const;
+    Iterator end() const;
 
-
+    void printReadable(std :: ostream & out) const;
 };
