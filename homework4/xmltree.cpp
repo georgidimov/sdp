@@ -26,10 +26,17 @@ XMLtree :: Iterator XMLtree :: begin(){
 }
 
 XMLtree :: Iterator XMLtree :: end(){
-    //write me
+    return Iterator();
 }
 
+
+
+
 ///Iterator`s part
+XMLtree :: Iterator :: Iterator(){
+    ;
+}
+
 XMLtree :: Iterator :: Iterator(Tag * current){
     tagsQueue.enqueue(current);
     tagsQueue.enqueue(current->getChilds());
@@ -51,6 +58,10 @@ XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(int uselessVar){
         tagsQueue.enqueue(tagsQueue.peek()->getChilds());
     }
     //tagsQueue.peek()->printChilds();
+}
+
+XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(){
+    (* this)++;
 }
 
 Tag * XMLtree :: Iterator :: operator *(){

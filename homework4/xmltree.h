@@ -18,9 +18,11 @@ public:
     class Iterator{
         Queue<Tag *> tagsQueue;
     public:
+        Iterator();
         Iterator(Tag * current);
 
         Iterator & operator++(int uselessVar);
+        Iterator & operator++();
 
         Tag * operator *();
 
