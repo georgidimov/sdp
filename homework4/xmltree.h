@@ -22,6 +22,7 @@ public:
         Iterator(Tag * current);
 
         Iterator & operator++(int uselessVar);
+
         Iterator & operator++();
 
         Tag * operator *();
@@ -31,7 +32,7 @@ public:
     };
 
 
-    void addTag(Value parent, Value k, Value v);
+    void addTag(const Value & parentKey, const Value & k, const Value & v);
 
 
     Iterator begin();

@@ -1,7 +1,7 @@
 #include "xmltree.h"
 
 XMLtree :: XMLtree(){
-    //root = new Tag(NULL, Value((char *) "root"), Value((char *) ""));
+    root = NULL;
 }
 
 XMLtree :: XMLtree(Tag * r){
@@ -17,8 +17,20 @@ void XMLtree :: clear(){
     delete root;
 }
 
-void XMLtree :: addTag(Value parent, Value k, Value v){
+void XMLtree :: addTag(const Value & parentKey, const Value & k, const Value & v){
+    if(root == NULL){
+        root = new Tag(NULL, k, v);
+        return;
+    }
 
+    for(Iterator i = begin(); i; ++i){
+        if((*i)->getKey() == parentKey){
+            Tag * newTag = new Tag(*i, k, v);
+            (*i)->addChild(newTag);
+
+            return;
+        }
+    }
 }
 
 XMLtree :: Iterator XMLtree :: begin(){
@@ -61,7 +73,7 @@ XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(int uselessVar){
 }
 
 XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(){
-    (* this)++;
+    (*this)++;
 }
 
 Tag * XMLtree :: Iterator :: operator *(){
