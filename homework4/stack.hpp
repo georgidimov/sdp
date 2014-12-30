@@ -3,14 +3,14 @@
 #include <list.hpp>
 
 template <class T>
-class Stack : public List<T>{
+class Stack : private List<T>{
 public:
     Stack();
     Stack(const Stack<T> & s);
     Stack & operator = (const Stack & s);
     ~Stack();
 
-    void push(T & newEl);
+    void push(const T & newEl);
     T pop();
 
     bool isEmpty() const;
@@ -43,7 +43,7 @@ Stack<T> :: ~Stack(){
 }
 
 template <class T>
-void Stack<T> :: push(T & newEl){
+void Stack<T> :: push(const T & newEl){
     List<T> :: addAt(0, newEl);
 }
 
