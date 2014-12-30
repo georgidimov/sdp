@@ -36,11 +36,11 @@ Tag * Tag :: getParent() const{
     return parent;
 }
 
-Value Tag :: getKey() const{
+const Value & Tag::getKey() const{
     return key;
 }
 
-Value Tag :: getValue() const{
+const Value & Tag :: getValue() const{
     return value;
 }
 

@@ -19,8 +19,8 @@ public:
     ~Tag();
 
     Tag * getParent() const;
-    Value getKey() const;
-    Value getValue() const;
+    const Value & getKey() const;
+    const Value & getValue() const;
 
     void addChild(Tag * child);
     const List<Tag *> & getChilds() const;
