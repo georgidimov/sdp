@@ -26,8 +26,6 @@ public:
     T removeAt(size_t index);
     const T & getAt(size_t index) const;
 
-
-
    size_t getSize() const;
    bool isEmpty() const;
 };
