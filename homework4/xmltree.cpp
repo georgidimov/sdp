@@ -4,44 +4,66 @@ XMLtree :: XMLtree(){
     //root = new Tag(NULL, Value((char *) "root"), Value((char *) ""));
 }
 
+XMLtree :: XMLtree(Tag * r){
+    root = r;
+}
+
+
 XMLtree :: ~XMLtree(){
     clear();
 }
 
 void XMLtree :: clear(){
-    //delete root;
+    delete root;
 }
 
 void XMLtree :: addTag(Value parent, Value k, Value v){
 
 }
 
-///Iterator`s part
-XMLtree :: Iterator :: Iterator(Tag * k){
-    tagsQueue.enqueue(k);
-    tagsQueue.enqueue(k->getChilds());
-}
-
-const XMLtree :: Iterator &  XMLtree :: begin(){
+XMLtree :: Iterator XMLtree :: begin(){
     return Iterator(root);
 }
 
-const XMLtree :: Iterator &  XMLtree :: end(){
+XMLtree :: Iterator XMLtree :: end(){
     //write me
 }
 
-const XMLtree :: Iterator & XMLtree :: Iterator :: operator++(){
-    //write me
+///Iterator`s part
+XMLtree :: Iterator :: Iterator(Tag * current){
+    parent = current->getParent();
+    tagsQueue.enqueue(current);
+    tagsQueue.enqueue(current->getChilds());
+
+    /*
+    List<Tag *> l = current->getChilds();
+
+    while(l.getSize()){
+        std :: cout << l.getAt(0)->getKey() << ' ' << l.getAt(0)->getValue() << std :: endl;
+        l.removeAt(0);
+    }
+    */
 }
 
-const XMLtree :: Iterator & XMLtree :: Iterator :: operator--(){
-    //write me
+XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(int uselessVar){
+    tagsQueue.dequeue();
+
+    if(tagsQueue.getSize()){
+        tagsQueue.enqueue(tagsQueue.peek()->getChilds());
+    }
+    //tagsQueue.peek()->printChilds();
 }
 
-bool XMLtree :: Iterator :: operator ==(const XMLtree :: Iterator & rh) const{
-    //return current == rh.current;
+Tag * XMLtree :: Iterator :: operator *(){
+    return tagsQueue.peek();
+}
+
+
+bool XMLtree :: Iterator :: operator ==(const Iterator & r) const{
+   //write me
 }
 
 XMLtree :: Iterator :: operator bool() const{
-    //return current == NULL;
+    return tagsQueue.getSize();
 }
+

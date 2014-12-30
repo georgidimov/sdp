@@ -4,32 +4,37 @@
 
 class XMLtree{
     Tag * root;
-    Queue<Tag *> iteratorQueue;
+
     void clear();
 //protected:
 public:
-    class Iterator{
-        Tag * current;
-
-    public:
-        Iterator(Tag * k);
-
-        const Iterator & operator++();
-
-        const Iterator & operator--();
-        bool operator ==(const Iterator & rh) const;
-
-        operator bool() const;
-    };
 
 //public:
     XMLtree();
+    ///remove me
+    XMLtree(Tag * r);
     ~XMLtree();
+
+    class Iterator{
+        Tag * parent;
+        Queue<Tag *> tagsQueue;
+    public:
+        Iterator(Tag * current);
+
+        Iterator & operator++(int uselessVar);
+
+        Tag * operator *();
+
+        bool operator ==(const Iterator & r) const;
+        operator bool() const;
+    };
+
+
     void addTag(Value parent, Value k, Value v);
 
 
-    const Iterator & begin();
-    const Iterator & end();
+    Iterator begin();
+    Iterator end();
 
 
 };
