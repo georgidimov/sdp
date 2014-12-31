@@ -3,7 +3,6 @@
 #include <list.hpp>
 #include <attribute.h>
 
-///Check clear method
 class Tag{
     List<Tag *> childs;
 
@@ -27,7 +26,7 @@ public:
     void addChild(Tag * child);
     void removeChild(const Value & key);
     Tag * findChild(const Value & key) const;
-    const List<Tag *> & getChilds() const;
+    List<Tag *> & getChilds();
     bool hasChilds() const;
 
 
@@ -35,14 +34,4 @@ public:
     void changeAttribute(Value key, Value newValue);
     void removeAttribute(Value key);
     const List<Attribute> & getAttributes() const;
-
-    ///REMOVE ME
-    void printChilds() const{
-        size_t size = childs.getSize();
-
-        std :: cout << std :: endl << size << std :: endl;
-        for(size_t i = 0; i < size; ++i){
-           std :: cout << childs[i]->getKey() << ' ' << childs[i]->getValue() << std :: endl;
-        }
-    }
 };

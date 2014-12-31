@@ -51,21 +51,14 @@ void Tag :: addChild(Tag * child){
 }
 
 void Tag :: removeChild(const Value & key){
-    size_t size = childs.getSize();
+    int size = (int)childs.getSize();
 
-    size_t i = 0;
-    for(; i < size; ++i){
-        if(childs.getAt(i)->getKey() == key){
-            break;
+    for(--size; size >= 0; --size){
+        if(childs.getAt(size)->getKey() == key){
+            delete childs[size];
+            childs.removeAt(size);
         }
     }
-
-    if(i >= size){
-       throw std :: runtime_error("wrong child key");
-    }
-
-    delete childs[i];
-    childs.removeAt(i);
 }
 
 Tag * Tag :: findChild(const Value & key) const{
@@ -80,7 +73,7 @@ Tag * Tag :: findChild(const Value & key) const{
     throw std :: runtime_error("wrong child key");
 }
 
-const List<Tag *> & Tag :: getChilds() const{
+List<Tag *> & Tag::getChilds(){
     return childs;
 }
 
