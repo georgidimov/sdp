@@ -19,11 +19,12 @@ public:
     Tag(Tag * passedParent, Value passedKey, Value passedValue);
     ~Tag();
 
-    Tag * getParent() const;
+    //Tag * getParent() const;
     const Value & getKey() const;
     const Value & getValue() const;
 
     void addChild(Tag * child);
+    void removeChild(const Value & key);
     Tag * findChild(const Value & key) const;
     const List<Tag *> & getChilds() const;
     bool hasChilds() const;

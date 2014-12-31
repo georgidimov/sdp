@@ -31,11 +31,11 @@ size_t Tag :: findAttrIndex(Value key) const{
 
     throw "invalid key";
 }
-
+/*
 Tag * Tag :: getParent() const{
     return parent;
 }
-
+*/
 const Value & Tag::getKey() const{
     return key;
 }
@@ -46,6 +46,24 @@ const Value & Tag :: getValue() const{
 
 void Tag :: addChild(Tag * child){
     childs.add(child);
+}
+
+void Tag :: removeChild(const Value & key){
+    size_t size = childs.getSize();
+
+    size_t i = 0;
+    for(; i < size; ++i){
+        if(childs.getAt(i)->getKey() == key){
+            break;
+        }
+    }
+
+    if(i >= size){
+       throw std :: runtime_error("wrong child key");
+    }
+
+    delete childs[i];
+    childs.removeAt(i);
 }
 
 Tag * Tag :: findChild(const Value & key) const{
