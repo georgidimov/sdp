@@ -106,10 +106,11 @@ void XMLtree :: printReadable(std :: ostream & out) const{
     Queue<Tag *> tagsSequence;
     Queue<int> tagsLevel;
 
+
     DFS(root, tagsSequence, tagsLevel, 0);
 
-
     Stack<Value> endTags;
+    Stack<int> endTagsLevel;
 
     int level = 0;
 
@@ -117,13 +118,15 @@ void XMLtree :: printReadable(std :: ostream & out) const{
     Tag * currentTag = NULL;
     Value currentTagKey;
     Value currentTagValue;
+    int currentTagLevel;
 
     while(tagsSequence.getSize()){
         currentTag = tagsSequence.dequeue();
         currentTagKey = currentTag->getKey();
         currentTagValue = currentTag->getValue();
+        currentTagLevel = tagsLevel.dequeue();
 
-        addTabs(out, tagsLevel.dequeue());
+        addTabs(out, currentTagLevel);
 
         out << '<' << currentTagKey << '>';
 
@@ -131,15 +134,26 @@ void XMLtree :: printReadable(std :: ostream & out) const{
             out << currentTagValue << "</" << currentTagKey << '>';
         }else{
             endTags.push(currentTagKey);
+            endTagsLevel.push(currentTagLevel);
         }
 
         out << std :: endl;
+
+        if(!tagsLevel.isEmpty() && !endTagsLevel.isEmpty() && tagsLevel.peek() == endTagsLevel.peek()){
+            addTabs(out, endTagsLevel.pop());
+            out << "</" << endTags.pop() << '>' << std :: endl;
+        }
 
         if(currentTag->getParent() == tempParentTag){
             ++level;
         }
 
         tempParentTag = currentTag->getParent();
+    }
+
+    while(!endTags.isEmpty()){
+        addTabs(out, endTagsLevel.pop());
+        out << "</" << endTags.pop() << '>' << std :: endl;
     }
 
 /*
