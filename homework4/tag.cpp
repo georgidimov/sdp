@@ -1,8 +1,6 @@
 #include "tag.h"
 
-Tag :: Tag(Tag * passedParent, Value passedKey, Value passedValue){
-    parent = passedParent;
-
+Tag :: Tag(Value passedKey, Value passedValue){
     key = passedKey;
     value = passedValue;
 }
@@ -31,11 +29,7 @@ size_t Tag :: findAttrIndex(Value key) const{
 
     throw "invalid key";
 }
-/*
-Tag * Tag :: getParent() const{
-    return parent;
-}
-*/
+
 const Value & Tag::getKey() const{
     return key;
 }
