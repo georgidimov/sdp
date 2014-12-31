@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <list.hpp>
 #include <attribute.h>
 
@@ -23,6 +24,7 @@ public:
     const Value & getValue() const;
 
     void addChild(Tag * child);
+    Tag * findChild(const Value & key) const;
     const List<Tag *> & getChilds() const;
 
 
@@ -31,13 +33,12 @@ public:
     void removeAttribute(Value key);
 
     ///REMOVE ME
-    void printAttrs() const{
-        size_t size = attrs.getSize();
+    void printChilds() const{
+        size_t size = childs.getSize();
 
+        std :: cout << std :: endl << size << std :: endl;
         for(size_t i = 0; i < size; ++i){
-            std :: cout << attrs[i].getValue() << ' ';
+           std :: cout << childs[i]->getKey() << ' ' << childs[i]->getValue() << std :: endl;
         }
-
-        std :: cout << std :: endl;
     }
 };

@@ -48,6 +48,18 @@ void Tag :: addChild(Tag * child){
     childs.add(child);
 }
 
+Tag * Tag :: findChild(const Value & key) const{
+    size_t size = childs.getSize();
+
+    for(size_t i = 0; i < size; ++i){
+        if(childs.getAt(i)->getKey() == key){
+            return childs[i];
+        }
+    }
+
+    throw std :: runtime_error("wrong child key");
+}
+
 const List<Tag *> & Tag :: getChilds() const{
     return childs;
 }
