@@ -8,9 +8,10 @@ class XMLtree{
 
     void clear();
 
-    void addTabs(std :: ostream & out, size_t level) const;
+    void addTabs(std :: ostream & out, int level) const;
 
     Tag * findTag(const Value & path) const;
+    void DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, int level) const;
 //protected:
 public:
 
