@@ -12,6 +12,8 @@ public:
 
     void push(const T & newEl);
     T pop();
+    T peek() const;
+
 
     bool isEmpty() const;
 };
@@ -54,6 +56,11 @@ T Stack<T>::pop(){
     }
 
     return List<T> :: removeAt(0);
+}
+
+template <class T>
+T Stack<T> :: peek() const{
+    return List<T> :: getAt(0);
 }
 
 template <class T>
