@@ -60,27 +60,14 @@ void XMLtree :: DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, in
 }
 
 void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
-    /*
-    if(root == NULL){
-        root = new Tag(NULL, k, v);
-        return;
-    }
-
-    for(Iterator i = begin(); i; ++i){
-        if((*i)->getKey() == parentKey){
-            Tag * newTag = new Tag(*i, k, v);
-            (*i)->addChild(newTag);
-
-            return;
-        }
-    }*/
-
     Tag * parent = findTag(path);
 
     Tag * newTag = new Tag(parent, k, v);
 
     parent->addChild(newTag);
 }
+
+
 
 XMLtree :: Iterator XMLtree :: begin() const{
     return Iterator(root);
@@ -112,9 +99,6 @@ void XMLtree :: printReadable(std :: ostream & out) const{
     Stack<Value> endTags;
     Stack<int> endTagsLevel;
 
-    int level = 0;
-
-    Tag * tempParentTag = root->getParent();
     Tag * currentTag = NULL;
     Value currentTagKey;
     Value currentTagValue;
@@ -143,51 +127,12 @@ void XMLtree :: printReadable(std :: ostream & out) const{
             addTabs(out, endTagsLevel.pop());
             out << "</" << endTags.pop() << '>' << std :: endl;
         }
-
-        if(currentTag->getParent() == tempParentTag){
-            ++level;
-        }
-
-        tempParentTag = currentTag->getParent();
     }
 
     while(!endTags.isEmpty()){
         addTabs(out, endTagsLevel.pop());
         out << "</" << endTags.pop() << '>' << std :: endl;
     }
-
-/*
-    Stack<Value> endTags;
-
-    int level = 0;
-
-    Tag * tempParentNode = root->getParent();
-
-    for(Iterator i = begin(); i; ++i){
-        addTabs(out, level);
-        out << '<' << (*i)->getKey() << '>';// << std :: endl;
-
-        if((*i)->getValue() == Value((char *)"")){
-            out << std :: endl;
-            endTags.push((*i)->getKey());
-
-            if(tempParentNode != (*i)->getParent()){
-                ++level;
-            }
-        }else{
-            out<<(*i)->getValue() << "</" << (*i)->getValue() << '>' << std :: endl;
-        }
-
-        tempParentNode = (*i)->getParent();
-    }
-
-    while(!endTags.isEmpty()){
-        --level;
-
-        addTabs(out, level);
-        out << "</" << endTags.pop() << '>' << std :: endl;
-    }
-*/
 }
 
 
