@@ -21,7 +21,10 @@ public:
 
     //Tag * getParent() const;
     const Value & getKey() const;
+    void setKey(const Value & newKey);
+
     const Value & getValue() const;
+    void setValue(const Value & newValue);
 
     void addChild(Tag * child);
     void removeChild(const Value & key);

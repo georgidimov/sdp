@@ -40,8 +40,16 @@ const Value & Tag::getKey() const{
     return key;
 }
 
+void Tag :: setKey(const Value & newKey){
+    key = newKey;
+}
+
 const Value & Tag :: getValue() const{
     return value;
+}
+
+void Tag :: setValue(const Value & newValue){
+    value = newValue;
 }
 
 void Tag :: addChild(Tag * child){
