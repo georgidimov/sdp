@@ -111,3 +111,7 @@ void Tag :: removeAttribute(Value key){
         }
     }
 }
+
+const List<Attribute> & Tag :: getAttributes() const{
+    return attrs;
+}

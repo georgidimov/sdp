@@ -36,6 +36,7 @@ public:
     void addAttribute(Value k, Value v);
     void changeAttribute(Value key, Value newValue);
     void removeAttribute(Value key);
+    const List<Attribute> & getAttributes() const;
 
     ///REMOVE ME
     void printChilds() const{
