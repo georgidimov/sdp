@@ -43,6 +43,10 @@ bool Value :: operator ==(const Value & v) const{
     return !strcmp(value, v.value);
 }
 
+bool Value :: operator !=(const Value & v) const{
+    return !(*this == v);
+}
+
 std :: ostream & operator <<(std :: ostream & out, const Value & v){
     out << v.value;
 
