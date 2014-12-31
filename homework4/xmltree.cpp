@@ -17,7 +17,33 @@ void XMLtree :: clear(){
     delete root;
 }
 
-void XMLtree :: addTag(const Value & parentKey, const Value & k, const Value & v){
+Tag * XMLtree :: findTag(const Value & path) const{
+    Tag * tempNode;
+
+    char * tempTagCharP = strtok(path.getValue(), "/");
+    Value tempTagPath(tempTagCharP);
+
+    if(root->getKey() != tempTagCharP){
+        throw std :: runtime_error("wrong child key");
+    }else{
+        tempNode = root;
+    }
+
+    tempTagCharP = strtok(NULL, "/");
+
+    while(tempTagCharP != NULL){
+        tempTagPath = Value(tempTagCharP);
+
+        tempNode = tempNode->findChild(tempTagPath);
+
+        tempTagCharP = strtok(NULL, "/");
+    }
+
+    return tempNode;
+}
+
+void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
+    /*
     if(root == NULL){
         root = new Tag(NULL, k, v);
         return;
@@ -30,7 +56,13 @@ void XMLtree :: addTag(const Value & parentKey, const Value & k, const Value & v
 
             return;
         }
-    }
+    }*/
+
+    Tag * parent = findTag(path);
+
+    Tag * newTag = new Tag(parent, k, v);
+
+    parent->addChild(newTag);
 }
 
 XMLtree :: Iterator XMLtree :: begin() const{
@@ -42,10 +74,10 @@ XMLtree :: Iterator XMLtree :: end() const{
 }
 
 void XMLtree :: addTabs(std :: ostream & out, size_t level) const{
-    while(level--){
-        for(size_t i = 0; i < 4; ++i){
-            out << ' ';
-        }
+    level *= 4;
+
+    for(size_t i = 0; i < level; ++i){
+        out << ' ';
     }
 }
 

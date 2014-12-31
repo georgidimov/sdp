@@ -9,6 +9,8 @@ class XMLtree{
     void clear();
 
     void addTabs(std :: ostream & out, size_t level) const;
+
+    Tag * findTag(const Value & path) const;
 //protected:
 public:
 
@@ -35,7 +37,7 @@ public:
     };
 
 
-    void addTag(const Value & parentKey, const Value & k, const Value & v);
+    void addTag(const Value & path, const Value & k, const Value & v);
 
 
     Iterator begin() const;
