@@ -9,6 +9,16 @@ Value :: Value(char * passedValue){
     strcpy(value, passedValue);
 }
 
+Value :: Value(char * passedValue, size_t end){
+    value = new char[end + 1];
+
+    for(size_t i = 0; i < end; ++i){
+        value[i] = passedValue[i];
+    }
+
+    value[end] = '\0';
+}
+
 Value :: Value(const Value &o){
     //check for self-assignment
     if(&o == this){
