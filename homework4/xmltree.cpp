@@ -206,15 +206,6 @@ XMLtree :: Iterator :: Iterator(){
 XMLtree :: Iterator :: Iterator(Tag * current){
     tagsQueue.enqueue(current);
     tagsQueue.enqueue(current->getChilds());
-
-    /*
-    List<Tag *> l = current->getChilds();
-
-    while(l.getSize()){
-        std :: cout << l.getAt(0)->getKey() << ' ' << l.getAt(0)->getValue() << std :: endl;
-        l.removeAt(0);
-    }
-    */
 }
 
 XMLtree :: Iterator & XMLtree :: Iterator :: operator ++(int uselessVar){
