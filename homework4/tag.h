@@ -26,6 +26,7 @@ public:
     void addChild(Tag * child);
     Tag * findChild(const Value & key) const;
     const List<Tag *> & getChilds() const;
+    bool hasChilds() const;
 
 
     void addAttribute(Value k, Value v);

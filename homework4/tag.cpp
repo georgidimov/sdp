@@ -64,6 +64,10 @@ const List<Tag *> & Tag :: getChilds() const{
     return childs;
 }
 
+bool Tag :: hasChilds() const{
+    return childs.getSize();
+}
+
 void Tag :: addAttribute(Value k, Value v){
     attrs.add(Attribute(k, v));
 }
