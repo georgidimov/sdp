@@ -55,4 +55,5 @@ public:
     Iterator end() const;
 
     void printReadable(std :: ostream & out) const;
+    void printUnreadable(std :: ostream & out) const;
 };
