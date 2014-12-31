@@ -5,7 +5,6 @@
 
 ///Check clear method
 class Tag{
-    Tag * parent;
     List<Tag *> childs;
 
     List<Attribute> attrs;
@@ -16,10 +15,9 @@ class Tag{
     void clear();
     size_t findAttrIndex(Value key) const;
 public:
-    Tag(Tag * passedParent, Value passedKey, Value passedValue);
+    Tag(Value passedKey, Value passedValue);
     ~Tag();
 
-    //Tag * getParent() const;
     const Value & getKey() const;
     void setKey(const Value & newKey);
 

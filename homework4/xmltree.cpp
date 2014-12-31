@@ -1,7 +1,7 @@
 #include "xmltree.h"
 
 XMLtree :: XMLtree(){
-    root = new Tag(NULL, Value((char *)"root"), Value((char *)""));
+    root = new Tag(Value((char *)"root"), Value((char *)""));
 }
 
 XMLtree :: XMLtree(Tag * r){
@@ -71,7 +71,7 @@ void XMLtree :: printAttributes(std::ostream & out, Tag * currentTag) const{
 void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
     Tag * parent = findTag(path);
 
-    Tag * newTag = new Tag(parent, k, v);
+    Tag * newTag = new Tag(k, v);
 
     parent->addChild(newTag);
 }
