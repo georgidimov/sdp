@@ -111,6 +111,17 @@ void XMLtree :: addTagAttribute(const Value & path, const Value & attrKey, const
     currentTag->addAttribute(attrKey, attrValue);
 }
 
+void XMLtree :: removeTagAttribute(const Value & path, const Value & attrKey){
+    Tag * currentTag = findTag(path);
+
+    currentTag->removeAttribute(attrKey);
+}
+
+void XMLtree :: changeTagAttribute(const Value & path, const Value & attrKey, const Value & newValue){
+    Tag * currentTag = findTag(path);
+
+    currentTag->changeAttribute(attrKey, newValue);
+}
 
 
 

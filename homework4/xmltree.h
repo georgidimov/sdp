@@ -43,8 +43,8 @@ public:
     void changeTagValue(const Value & path, const Value & newValue);
 
     void addTagAttribute(const Value & path, const Value & attrKey, const Value & attrValue);
-    void removeTagAttribute(const Value & path, Attribute attr);
-    void changeTagAttribute(const Value & path, Attribute attr);
+    void removeTagAttribute(const Value & path, const Value & attrKey);
+    void changeTagAttribute(const Value & path, const Value & attrKey, const Value & newValue);
 
 
     Iterator begin() const;
