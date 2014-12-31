@@ -29,4 +29,4 @@ HEADERS += \
     value.h \
     xmltree.h \
     queue.hpp \
-    Stack.hpp
+    stack.hpp
