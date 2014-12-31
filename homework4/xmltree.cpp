@@ -373,10 +373,6 @@ Tag * XMLtree :: Iterator :: operator *(){
 }
 
 
-bool XMLtree :: Iterator :: operator ==(const Iterator & r) const{
-
-}
-
 XMLtree :: Iterator :: operator bool() const{
     return tagsQueue.getSize();
 }
