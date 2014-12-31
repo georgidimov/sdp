@@ -12,10 +12,8 @@ class XMLtree{
 
     Tag * findTag(const Value & path) const;
     void DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, int level) const;
-//protected:
-public:
 
-//public:
+public:
     XMLtree();
     ///remove me
     XMLtree(Tag * r);
@@ -39,6 +37,7 @@ public:
 
 
     void addTag(const Value & path, const Value & k, const Value & v);
+    void removeTag(const Value & path);
 
 
     Iterator begin() const;

@@ -67,6 +67,25 @@ void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
     parent->addChild(newTag);
 }
 
+void XMLtree :: removeTag(const Value & path){
+    char * pathCP = path.getValue();
+
+    //find tag key and parent tag path
+    int size = 0;
+    for(size = strlen(pathCP) - 1; size >= 0; --size){
+        if(pathCP[size] == '/'){
+            break;
+        }
+    }
+
+    Value currentTag(pathCP + size + 1);
+    pathCP[size] = '\0';
+    Value parentTagpath(pathCP);
+
+    Tag * parent = findTag(parentTagpath);
+    parent->removeChild(currentTag);
+}
+
 
 
 XMLtree :: Iterator XMLtree :: begin() const{
