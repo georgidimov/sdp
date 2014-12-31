@@ -17,7 +17,7 @@ void XMLtree :: clear(){
     delete root;
 }
 
-Tag * XMLtree :: findTag(const Value & path) const{
+Tag * XMLtree::findTag(const Value & path) const{
     Tag * tempNode;
 
     char * tempTagCharP = strtok(path.getValue(), "/");
@@ -36,9 +36,15 @@ Tag * XMLtree :: findTag(const Value & path) const{
 
         tempNode = tempNode->findChild(tempTagPath);
 
-        tempTagCharP = strtok(NULL, "/");
+        //if(strtok(NULL, "/") != NULL){
+            tempTagCharP = strtok(NULL, "/");
+        //}else{
+        //    break;
+        //}
     }
 
+    //std :: cout << std :: endl << std :: endl << tempNode->getKey() << std :: endl << std :: endl;
+    //return tempNode->getChilds();
     return tempNode;
 }
 
@@ -68,15 +74,7 @@ void XMLtree :: printAttributes(std::ostream & out, Tag * currentTag) const{
     }
 }
 
-void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
-    Tag * parent = findTag(path);
-
-    Tag * newTag = new Tag(k, v);
-
-    parent->addChild(newTag);
-}
-
-void XMLtree :: removeTag(const Value & path){
+Value XMLtree :: sliceTagPath(const Value & path) const{
     char * pathCP = path.getValue();
 
     //find tag key and parent tag path
@@ -87,11 +85,55 @@ void XMLtree :: removeTag(const Value & path){
         }
     }
 
-    Value currentTag(pathCP + size + 1);
     pathCP[size] = '\0';
-    Value parentTagpath(pathCP);
+    return Value(pathCP);
+}
 
-    Tag * parent = findTag(parentTagpath);
+Value XMLtree :: sliceTagKey(const Value & path) const{
+    char * pathCP = path.getValue();
+
+    //find tag key and parent tag path
+    int size = 0;
+    for(size = strlen(pathCP) - 1; size >= 0; --size){
+        if(pathCP[size] == '/'){
+            break;
+        }
+    }
+
+    return Value(pathCP + size + 1);
+}
+
+void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
+    const Value & tagKey = sliceTagKey(path);
+
+    Tag * parentTag = findTag(sliceTagPath(path));
+    List<Tag *> & childs = parentTag->getChilds();
+
+
+    Tag * newTag = new Tag(k, v);
+    //std :: cout << tagKey << ' ' << parentTag->getKey();
+    if(tagKey == Value((char *)"root")){
+        root->addChild(newTag);
+        return;
+    }
+
+    int size = (int)childs.getSize();
+
+    for(int i = size - 1; i >= 0; --i){
+        if(childs.getAt(i)->getKey() == tagKey){
+            break;
+        }
+    }
+
+    childs[size - 1]->addChild(newTag);
+}
+
+void XMLtree :: removeTag(const Value & path){
+    Value currentTag = sliceTagKey(path);
+    Value parentTag = sliceTagPath(path);
+
+    Tag * parent = findTag(parentTag);
+    std :: cout << currentTag << ' ' << parentTag;
     parent->removeChild(currentTag);
 }
 
@@ -169,15 +211,22 @@ void XMLtree :: printReadable(std :: ostream & out) const{
 
         addTabs(out, currentTagLevel);
 
-        out << '<' << currentTagKey;
-        printAttributes(out, currentTag);
-        out << '>';
-
-        if(currentTagValue != Value((char *) "")){
-            out << currentTagValue << "</" << currentTagKey << '>';
+        if(!currentTag->hasChilds() && currentTag->getValue() == Value((char *) "")){
+            out << '<' << currentTagKey;
+            printAttributes(out, currentTag);
+            out << "/>";
         }else{
-            endTags.push(currentTagKey);
-            endTagsLevel.push(currentTagLevel);
+
+            out << '<' << currentTagKey;
+            printAttributes(out, currentTag);
+            out << '>';
+
+            if(currentTagValue != Value((char *) "")){
+                out << currentTagValue << "</" << currentTagKey << '>';
+            }else{
+                endTags.push(currentTagKey);
+                endTagsLevel.push(currentTagLevel);
+            }
         }
 
         out << std :: endl;

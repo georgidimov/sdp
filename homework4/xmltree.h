@@ -11,9 +11,13 @@ class XMLtree{
     void addTabs(std :: ostream & out, int level) const;
 
     Tag * findTag(const Value & path) const;
+
     void DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, int level) const;
 
     void printAttributes(std :: ostream & out, Tag * currentTag) const;
+
+    Value sliceTagPath(const Value & path) const;
+    Value sliceTagKey(const Value & path) const;
 public:
     XMLtree();
     ///remove me
