@@ -13,6 +13,7 @@ class XMLtree{
     Tag * findTag(const Value & path) const;
     void DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, int level) const;
 
+    void printAttributes(std :: ostream & out, Tag * currentTag) const;
 public:
     XMLtree();
     ///remove me
@@ -40,6 +41,10 @@ public:
     void removeTag(const Value & path);
     void changeTagKey(const Value & path, const Value & newKey);
     void changeTagValue(const Value & path, const Value & newValue);
+
+    void addTagAttribute(const Value & path, const Value & attrKey, const Value & attrValue);
+    void removeTagAttribute(const Value & path, Attribute attr);
+    void changeTagAttribute(const Value & path, Attribute attr);
 
 
     Iterator begin() const;

@@ -59,6 +59,15 @@ void XMLtree :: DFS(Tag * startTag, Queue<Tag *> & q, Queue<int> & tagsLevel, in
 
 }
 
+void XMLtree :: printAttributes(std::ostream & out, Tag * currentTag) const{
+    List<Attribute> attrs = currentTag->getAttributes();
+    size_t attrsCount = attrs.getSize();
+
+    for(size_t i = 0; i < attrsCount; ++i){
+        out << ' ' << attrs.getAt(i).getKey() << '=' << '"' << attrs.getAt(i).getValue() << '"';
+    }
+}
+
 void XMLtree :: addTag(const Value & path, const Value & k, const Value & v){
     Tag * parent = findTag(path);
 
@@ -96,7 +105,16 @@ void XMLtree :: changeTagValue(const Value & path, const Value & newValue){
     currentTag->setValue(newValue);
 }
 
+void XMLtree :: addTagAttribute(const Value & path, const Value & attrKey, const Value & attrValue){
+    Tag * currentTag = findTag(path);
 
+    currentTag->addAttribute(attrKey, attrValue);
+}
+
+
+
+
+//iterator`s part
 XMLtree :: Iterator XMLtree :: begin() const{
     return Iterator(root);
 }
@@ -140,7 +158,9 @@ void XMLtree :: printReadable(std :: ostream & out) const{
 
         addTabs(out, currentTagLevel);
 
-        out << '<' << currentTagKey << '>';
+        out << '<' << currentTagKey;
+        printAttributes(out, currentTag);
+        out << '>';
 
         if(currentTagValue != Value((char *) "")){
             out << currentTagValue << "</" << currentTagKey << '>';
