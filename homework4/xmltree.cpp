@@ -33,6 +33,7 @@ Tag * XMLtree::findTag(const Value & path) const{
         tempNode = root;
     }
 
+    //slice path and search for child in current tag
     tempTagCharP = strtok(NULL, "/");
 
     while(tempTagCharP != NULL){
@@ -42,6 +43,7 @@ Tag * XMLtree::findTag(const Value & path) const{
 
         tempTagCharP = strtok(NULL, "/");
     }
+
     return tempNode;
 }
 
@@ -213,17 +215,6 @@ void XMLtree :: changeTagAttribute(const Value & path, const Value & attrKey, co
     }
 }
 
-
-
-//iterator`s part
-XMLtree :: Iterator XMLtree :: begin() const{
-    return Iterator(root);
-}
-
-XMLtree :: Iterator XMLtree :: end() const{
-    return Iterator();
-}
-
 void XMLtree :: addTabs(std :: ostream & out, int level) const{
     if(level < 0){
         return;
@@ -236,7 +227,13 @@ void XMLtree :: addTabs(std :: ostream & out, int level) const{
     }
 }
 
+
 void XMLtree :: printReadable(std :: ostream & out) const{
+    //Collect in queue all tags and their depth level
+    //After that, start printing tags and if tag has no value
+    //and childs push end tag in stack, otherwise print end tag
+    //After this just print end tags with proper depth level
+
     Queue<Tag *> tagsSequence;
     Queue<int> tagsLevel;
 
@@ -340,6 +337,15 @@ void XMLtree :: printUnreadable(std::ostream & out) const{
 
 
 ///Iterator`s part
+
+XMLtree :: Iterator XMLtree :: begin() const{
+    return Iterator(root);
+}
+
+XMLtree :: Iterator XMLtree :: end() const{
+    return Iterator();
+}
+
 XMLtree :: Iterator :: Iterator(){
     ;
 }
