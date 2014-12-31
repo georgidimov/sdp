@@ -38,6 +38,8 @@ public:
 
     void addTag(const Value & path, const Value & k, const Value & v);
     void removeTag(const Value & path);
+    void changeTagKey(const Value & path, const Value & newKey);
+    void changeTagValue(const Value & path, const Value & newValue);
 
 
     Iterator begin() const;

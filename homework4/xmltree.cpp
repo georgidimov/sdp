@@ -86,6 +86,15 @@ void XMLtree :: removeTag(const Value & path){
     parent->removeChild(currentTag);
 }
 
+void XMLtree :: changeTagKey(const Value & path, const Value & newKey){
+    Tag * currentTag = findTag(path);
+    currentTag->setKey(newKey);
+}
+
+void XMLtree :: changeTagValue(const Value & path, const Value & newValue){
+    Tag * currentTag = findTag(path);
+    currentTag->setValue(newValue);
+}
 
 
 XMLtree :: Iterator XMLtree :: begin() const{
