@@ -22,7 +22,8 @@ private:
     void initArray();
     void clear();
 
-    int calculateWaterVolume(size_t i, size_t j) const;
+    int calculateWaterVolume(size_t junctionI, size_t junctionJ) const;
+    int addOrRemoveWater(size_t i, size_t j) const;
     void tick();
 
     bool isValidPosition(int i, int j) const;
@@ -31,7 +32,7 @@ private:
     void print() const{
         for(size_t i = 0; i < n; ++i){
             for(size_t j = 0; j < m; ++j){
-                std :: cout << '('  << junctions[i][j].height << ", " <<  junctions[i][j].currentWaterVolume << "), ";
+                std :: cout << '(' << i << ", " << j << ", " << junctions[i][j].height << ", " <<  junctions[i][j].currentWaterVolume << "), ";
             }
             std :: cout << std :: endl;
         }

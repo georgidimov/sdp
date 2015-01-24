@@ -48,45 +48,93 @@ void StreetGraph :: initArray(){
 
 }
 
-int StreetGraph :: calculateWaterVolume(size_t i, size_t j) const{
-    int result = junctions[i][j].currentWaterVolume;
+int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) const{
+    //int waterToRemove = junctions[i][j].currentWaterVolume;
 
-    if(i == 0 || i == n - 1){   //is vertical border
-        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
-        result -= 2 * waterPermeability;
+
+    junctionI = 1;
+    junctionJ = 4;
+
+    size_t neighboursCount = 4;
+    size_t coordinatesCount = 2;
+
+    int ** neighbours = new int * [neighboursCount];
+
+    for(size_t k = 0; k < neighboursCount; ++k){
+        neighbours[k] = new int [coordinatesCount];
     }
 
-    if(j == 0 || j == m - 1){   //is horizontal border
-        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
-        result -= 2 * waterPermeability;
+    //left junction
+    neighbours[0][0] = junctionI;
+    neighbours[0][1] = junctionJ - 1;
+
+    //down junction
+    neighbours[1][0] = junctionI + 1;
+    neighbours[1][1] = junctionJ;
+
+    //rigth junction
+    neighbours[2][0] = junctionI;
+    neighbours[2][1] = junctionJ + 1;
+
+    //up junction
+    neighbours[3][0] = junctionI - 1;
+    neighbours[3][1] = junctionJ;
+
+    std :: cout << junctions[junctionI][junctionJ].height << std :: endl;
+
+    int waterToRemove = 0;
+    int waterToAdd = 0;
+
+    //check all neighbours if will add or remove water
+    for(size_t i = 0; i < neighboursCount; ++i){
+        if(isValidPosition(neighbours[i][0], neighbours[i][1])){
+            if(junctions[ neighbours[i][0] ][ neighbours[i][1] ].height > junctions[junctionI][junctionJ].height){
+            waterToAdd += waterPermeability;
+            }else{
+                waterToRemove += waterPermeability;
+            }
+        }
     }
 
-    i = 1;
-    j = 1;
+    std :: cout << junctions[junctionI][junctionJ].height << std :: endl;
+    if(junctionI == 0 || junctionI == n - 1){   //is vertical border
+        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
+        waterToRemove += 2 * waterPermeability;
+    }
 
+    if(junctionJ == 0 || junctionJ == m - 1){   //is horizontal border
+        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
+        waterToRemove += 2 * waterPermeability;
+    }
+
+    std :: cout << "w t r - " << waterToRemove << std :: endl << "w t a + " << waterToAdd;
+
+ /*
     int neighbourI, neighbourJ;
 
     //left junction
     neighbourI = i;
     neighbourJ = j - 1;
-    std :: cout << junctions[neighbourI][neighbourJ].height << ' ';
-    //std :: cout << "(" << neighbourI << ", " << neighbourJ << ") ";
+
     //down junction
     neighbourI = i - 1;
     neighbourJ = j;
-    //std :: cout << "(" << neighbourI << ", " << neighbourJ << ") ";
-std :: cout << junctions[neighbourI][neighbourJ].height << ' ';
+
     //right junction
     neighbourI = i;
     neighbourJ = j + 1;
-    //std :: cout << "(" << neighbourI << ", " << neighbourJ << ") ";
-std :: cout << junctions[neighbourI][neighbourJ].height << ' ';
+
     //up junction
     neighbourI = i + 1;
     neighbourJ = j;
-    //std :: cout << "(" << neighbourI << ", " << neighbourJ << ") ";
-std :: cout << junctions[neighbourI][neighbourJ].height << ' ';
+*/
 
+    for(size_t k = 0; k < neighboursCount; ++k){
+        delete [] neighbours[k];
+    }
+
+    delete [] neighbours;
+    neighbours = NULL;
     return 0;
 }
 
@@ -101,7 +149,7 @@ void StreetGraph :: tick(){
 }
 
 bool StreetGraph :: isValidPosition(int i, int j) const{
-    if(i >= 0 && i < n && j >= 0 && j < m){
+    if(i >= 0 && i < (int)n && j >= 0 && j < (int)m){
         return true;
     }
 
