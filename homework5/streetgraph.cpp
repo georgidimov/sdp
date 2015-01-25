@@ -2,8 +2,12 @@
 
 StreetGraph :: StreetGraph(std::ifstream & source){
     junctionsHeight = NULL;
+
+    simulations = NULL;
+    simulationsCount = 0;
+
     sortedJunctions = NULL;
-    sortedJunctionsLimit = 0;
+    sortedJunctionsCount = 0;
 
     load(source);
 }
@@ -26,7 +30,7 @@ void StreetGraph :: load(std::ifstream & source){
     source >> waterPermeability;
 
     //initialize needed matrix
-    initArrays();
+    initializeJunctionArrays();
 
     Junction tempJunction;
 
@@ -44,12 +48,26 @@ void StreetGraph :: load(std::ifstream & source){
         }
     }
 
+    //read simulation`s information
+    source >> simulationsCount;
+
+    initializeSimulationArray();
+
+    for(size_t i = 0; i < simulationsCount; ++i){
+        source >> simulations[i].K;
+        source >> simulations[i].T;
+    }
+
+
+    for(size_t i = 0; i < sortedJunctionsCount; ++i){
+        sortedJunctions[i].waterVolume = simulations[0].K;
+    }
 }
 
 void StreetGraph :: insertNewJunction(Junction junction){
     //use insertion sort and find the rigth place for junction
     Junction tempValue = junction;
-    size_t tempPosition = sortedJunctionsLimit;
+    size_t tempPosition = sortedJunctionsCount;
 
     while(tempPosition > 0 && tempValue.height > sortedJunctions[tempPosition - 1].height){
         sortedJunctions[tempPosition] = sortedJunctions[tempPosition - 1];
@@ -58,10 +76,10 @@ void StreetGraph :: insertNewJunction(Junction junction){
 
     sortedJunctions[tempPosition] = tempValue;
 
-    ++sortedJunctionsLimit;
+    ++sortedJunctionsCount;
 }
 
-void StreetGraph :: initArrays(){
+void StreetGraph :: initializeJunctionArrays(){
     //initialize needed matrix and array
     junctionsHeight = new int * [n];
 
@@ -72,8 +90,12 @@ void StreetGraph :: initArrays(){
     sortedJunctions = new Junction[n * m];
 }
 
+void StreetGraph :: initializeSimulationArray(){
+    simulations = new Simulation[simulationsCount];
+}
+
 void StreetGraph :: clear(){
-    //delete used matrix and array
+    //delete arrays used for junctions
     for(size_t i = 0; i < n; ++i){
         delete [] junctionsHeight[i];
     }
@@ -84,6 +106,10 @@ void StreetGraph :: clear(){
 
     delete [] sortedJunctions;
     sortedJunctions = NULL;
+
+    //delete array used for simulations
+    delete [] simulations;
+    simulations = NULL;
 }
 
 int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) const{
@@ -136,7 +162,12 @@ int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) cons
         waterToRemove += 2 * waterPermeability;
     }
 
-    std :: cout << "w t r - " << waterToRemove << std :: endl << "w t a + " << waterToAdd;
+    //std :: cout << "w t r - " << waterToRemove << std :: endl << "w t a + " << waterToAdd;
+    //if(waterToRemove > )
+
+
+
+
 
     //free used matrix
     for(size_t k = 0; k < neighboursCount; ++k){
@@ -150,8 +181,6 @@ int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) cons
 }
 
 void StreetGraph :: tick(){
-    std :: cout << junctionsHeight[0][0] << std :: endl;
-    calculateWaterVolume(0, 0);
     //for(size_t i = 0; i < n; ++i){
     //    for(size_t j = 0; j < m; ++j){
             //std :: cout << "i = " << i << " j = " << j << std :: endl;

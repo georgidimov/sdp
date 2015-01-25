@@ -7,11 +7,17 @@ struct Coordinate{
     int j;
 };
 
+struct Simulation{
+    double K;
+    size_t T;
+};
+
 struct Junction{
     int height;
     Coordinate position;
     double waterVolume;
 };
+
 
 
 
@@ -33,7 +39,7 @@ public:
             std :: cout << std :: endl;
         }
 
-        for(size_t i = 0; i < sortedJunctionsLimit; ++i){
+        for(size_t i = 0; i < sortedJunctionsCount; ++i){
             //std :: cout << sortedJunctions[i].height << ' ';
         }
     }
@@ -42,13 +48,18 @@ public:
 private:
     int ** junctionsHeight;
 
+    Simulation * simulations;
+    size_t simulationsCount;
+
     Junction * sortedJunctions;
-    size_t sortedJunctionsLimit;
+    size_t sortedJunctionsCount;
 
     size_t n, m, waterPermeability;
 
     void load(std :: ifstream & source);
-    void initArrays();
+    void initializeJunctionArrays();
+    void initializeSimulationArray();
+
     void clear();
 
     void insertNewJunction(Junction junction);
