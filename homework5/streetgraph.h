@@ -3,8 +3,8 @@
 #include <fstream>
 
 struct Coordinate{
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 };
 
 struct Simulation{
@@ -16,6 +16,7 @@ struct Junction{
     int height;
     Coordinate position;
     double waterVolume;
+    bool visited;
 };
 
 
@@ -24,37 +25,25 @@ struct Junction{
 class StreetGraph{
 public:
     StreetGraph(std :: ifstream & source);
-    StreetGraph(const StreetGraph & rh);
     ~StreetGraph();
 
-    //remove me
-    void print() const{
-        std :: cout << std :: endl;
-        for(size_t i = 0; i < n; ++i){
-            for(size_t j = 0; j < m; ++j){
-                //std :: cout << '(' << i << ", " << j << ", " << junctions[i][j].height << ", " <<  junctions[i][j].currentWaterVolume << "), ";
-                //std :: cout << '(' << i << ", " << j << ", " << junctionsHeight[i][j] << ')';
-                std :: cout << junctionsHeight[i][j] << ' ';
-            }
-            std :: cout << std :: endl;
-        }
-
-        for(size_t i = 0; i < sortedJunctionsCount; ++i){
-            //std :: cout << sortedJunctions[i].height << ' ';
-        }
-    }
-
+    void print() const;
+    void simulate();
 
 private:
-    int ** junctionsHeight;
+    Junction ** junctions;
 
     Simulation * simulations;
     size_t simulationsCount;
+    size_t currentSimulation;
 
-    Junction * sortedJunctions;
+    Coordinate * sortedJunctions;
     size_t sortedJunctionsCount;
 
     size_t n, m, waterPermeability;
+
+    StreetGraph(const StreetGraph & rh);
+    StreetGraph & operator=(const StreetGraph & rh);
 
     void load(std :: ifstream & source);
     void initializeJunctionArrays();
@@ -62,12 +51,10 @@ private:
 
     void clear();
 
-    void insertNewJunction(Junction junction);
-    int calculateWaterVolume(size_t junctionI, size_t junctionJ) const;
+    void insertNewJunction(Coordinate junctionPosition, int junctionHeight);
+    double calculateWaterVolume(Junction & junction);
     int addOrRemoveWater(size_t i, size_t j) const;
-public:
-    //make me private
-    void tick();
-private:
-    bool isValidPosition(int i, int j) const;
+
+    bool isValidPosition(Coordinate coordinates) const;
+    bool isBorder(Coordinate coordinates) const;
 };
