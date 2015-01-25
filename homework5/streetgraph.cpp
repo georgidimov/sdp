@@ -27,36 +27,27 @@ void StreetGraph :: load(std::ifstream & source){
 
     //initialize needed matrix
     initArrays();
-    //std :: cout << n << ' ' << m << ' ' << waterPermeability <<  std :: endl;
 
-    size_t counter = 0;
     Junction tempJunction;
-    //read matrix content
+
+    //read matrix content and sort junctions in sortedJunction array
     for(size_t i = 0; i < n; ++i){
         for(size_t j = 0; j < m; ++j){
             source >> junctionsHeight[i][j];
-            //std :: cout << junctionsHeight[i][j] << ' ';
+
             tempJunction.height = junctionsHeight[i][j];
             tempJunction.waterVolume = 0;
             tempJunction.position.i = i;
             tempJunction.position.j = j;
 
             insertNewJunction(tempJunction);
-            //if(counter == 2)
-            //return;
-            //++counter;
-            //source >> junctionsHeight[i][j];
-            //junctions[i][j].waterVolume = waterPermeability;
-
-            //junctions[i][j].newWaterVolume = waterPermeability;
-
-            ++counter;
         }
     }
 
 }
 
 void StreetGraph :: insertNewJunction(Junction junction){
+    //use insertion sort and find the rigth place for junction
     Junction tempValue = junction;
     size_t tempPosition = sortedJunctionsLimit;
 
@@ -68,10 +59,10 @@ void StreetGraph :: insertNewJunction(Junction junction){
     sortedJunctions[tempPosition] = tempValue;
 
     ++sortedJunctionsLimit;
-
 }
 
 void StreetGraph :: initArrays(){
+    //initialize needed matrix and array
     junctionsHeight = new int * [n];
 
     for(size_t i = 0; i < n; ++i){
@@ -82,6 +73,7 @@ void StreetGraph :: initArrays(){
 }
 
 void StreetGraph :: clear(){
+    //delete used matrix and array
     for(size_t i = 0; i < n; ++i){
         delete [] junctionsHeight[i];
     }
@@ -95,8 +87,6 @@ void StreetGraph :: clear(){
 }
 
 int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) const{
-    //int waterToRemove = junctions[i][j].currentWaterVolume;
-
     size_t neighboursCount = 4;
     size_t coordinatesCount = 2;
 
@@ -122,8 +112,6 @@ int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) cons
     neighbours[3][0] = junctionI - 1;
     neighbours[3][1] = junctionJ;
 
-    //std :: cout << junctions[junctionI][junctionJ].height << std :: endl;
-
     double waterToRemove = 0;
     double waterToAdd = 0;
 
@@ -138,45 +126,26 @@ int StreetGraph :: calculateWaterVolume(size_t junctionI, size_t junctionJ) cons
         }
     }
 
-    //std :: cout << junctions[junctionI][junctionJ].height << std :: endl;
-    if(junctionI == 0 || junctionI == n - 1){   //is vertical border
-        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
+    //check if is vertical border
+    if(junctionI == 0 || junctionI == n - 1){
         waterToRemove += 2 * waterPermeability;
     }
 
-    if(junctionJ == 0 || junctionJ == m - 1){   //is horizontal border
-        //std :: cout << '(' << junctions[i][j].height << ", " << i << ", " << j << ") ";
+    //is horizontal border
+    if(junctionJ == 0 || junctionJ == m - 1){
         waterToRemove += 2 * waterPermeability;
     }
 
     std :: cout << "w t r - " << waterToRemove << std :: endl << "w t a + " << waterToAdd;
 
- /*
-    int neighbourI, neighbourJ;
-
-    //left junction
-    neighbourI = i;
-    neighbourJ = j - 1;
-
-    //down junction
-    neighbourI = i - 1;
-    neighbourJ = j;
-
-    //right junction
-    neighbourI = i;
-    neighbourJ = j + 1;
-
-    //up junction
-    neighbourI = i + 1;
-    neighbourJ = j;
-*/
-
+    //free used matrix
     for(size_t k = 0; k < neighboursCount; ++k){
         delete [] neighbours[k];
     }
 
     delete [] neighbours;
     neighbours = NULL;
+
     return 0;
 }
 
